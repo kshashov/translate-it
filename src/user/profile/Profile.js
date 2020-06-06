@@ -17,14 +17,14 @@ class Profile extends Component {
                                     <img src={this.props.currentUser.imageUrl} alt={this.props.currentUser.name}/>
                                 ) : (
                                     <div className="text-avatar">
-                                        <span>{this.props.currentUser.name && this.props.currentUser.name[0]}</span>
+                                        <span>{this.props.currentUser.user.name && this.props.currentUser.user.name[0]}</span>
                                     </div>
                                 )
                             }
                         </div>
                         <div className="profile-name">
-                           <h2>{this.props.currentUser.name}</h2>
-                           <p className="profile-email">{this.props.currentUser.email}</p>
+                           <h2>{this.props.currentUser.user.name}</h2>
+                           <p className="profile-email">{this.props.currentUser.user.email}</p>
                         </div>
                     </div>
                 </div>    

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../constants';
-// import { login } from '../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
 import githubLogo from '../../img/github-logo.png';
 import Alert from 'react-s-alert';
+import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 
 class Login extends Component {
     componentDidMount() {
@@ -35,12 +35,18 @@ class Login extends Component {
         }
 
         return (
-            <div className="login-container">
-                <div className="login-content">
-                    <h1 className="login-title">Login to SpringSocial</h1>
-                    <SocialLogin />
-                </div>
-            </div>
+            <Row className="social-container">
+                <Col sm="6">
+                    <Card body className="text-center social-card">
+                        <CardTitle tag="h2">Login</CardTitle>
+                        {/*<CardText>With supporting text below as a natural lead-in to additional content.</CardText>*/}
+                        <Button color="primary" size="lg" outline href={GOOGLE_AUTH_URL}>
+                                {/*<img src={googleLogo} alt="Google" className="social-btn"/> */}
+                                Log in with Google
+                        </Button>
+                    </Card>
+                </Col>
+            </Row>
         );
     }
 }

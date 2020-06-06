@@ -1,39 +1,63 @@
-import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import './AppHeader.css';
+import React, {Component, useState} from 'react';
+import {NavLink as RRNavLink, withRouter} from 'react-router-dom';
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    NavbarText
+} from 'reactstrap';
+import {Menu} from "antd";
+import Link from "react-router-dom/Link";
+import PropTypes from "prop-types";
+import UsersDataTable from "../users/components/UsersDataTable";
 
 class AppHeader extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
-        return (
-            <header className="app-header">
-                <div className="container">
-                    <div className="app-branding">
-                        <Link to="/" className="app-title">Spring Social</Link>
-                    </div>
-                    <div className="app-options">
-                        <nav className="app-nav">
-                                { this.props.authenticated ? (
-                                    <ul>
-                                        <li>
-                                            <NavLink to="/profile">Profile</NavLink>
-                                        </li>
-                                        <li>
-                                            <a onClick={this.props.onLogout}>Logout</a>
-                                        </li>
-                                    </ul>
-                                ): (
-                                    <ul>
-                                        <li>
-                                            <NavLink to="/login">Login</NavLink>        
-                                        </li>
-                                    </ul>
-                                )}
-                        </nav>
-                    </div>
-                </div>
-            </header>
-        )
+        const {location} = this.props;
+
+        return (<React.Fragment>{
+            this.props.authenticated ? (
+                <Menu theme="light" mode="horizontal" selectedKeys={location.pathname}>
+                    <Menu.Item key="/users">
+                        <Link to="/users">Users</Link>
+                    </Menu.Item>
+                    <Menu.Item key="/profile">
+                        <Link to="/profile">Profile</Link>
+                    </Menu.Item>
+                    <Menu.Item key="3" onClick={this.props.onLogout}>
+                        Logout
+                    </Menu.Item>
+                </Menu>
+            ) : (
+                <Menu theme="light" mode="horizontal" selectedKeys={location.pathname}>
+                    <Menu.Item key="/login">
+                        <Link to="/login">Login</Link>
+                    </Menu.Item>
+                </Menu>
+            )
+        }</React.Fragment>);
     }
 }
 
-export default AppHeader;
+AppHeader.defaultProps  = {
+    authenticated: false,
+};
+
+AppHeader.propTypes = {
+    authenticated: PropTypes.bool,
+    onLogout: PropTypes.func.isRequired
+};
+
+export default withRouter(AppHeader);

@@ -1,9 +1,9 @@
-import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
+import { API_BASE_URL, ACCESS_TOKEN, CURRENT_USER } from '../constants';
 import Alert from 'react-s-alert'
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
-const request = (options) => {
+export const request = (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
     })
@@ -19,6 +19,7 @@ const request = (options) => {
     .then(response => 
         response.json().then(json => {
             if (response.status === 401) {
+                localStorage.removeItem(CURRENT_USER);
                 Alert.error('User is not found. Try to refresh the page or relogin to the app');
             } else if (response.status === 403) {
                 Alert.error('You have no permission to perform this action');
@@ -38,23 +39,23 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/api/user/me",
+        url: API_BASE_URL + "/api/users/me",
         method: 'GET'
     });
 }
 
-export function login(loginRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/login",
-        method: 'POST',
-        body: JSON.stringify(loginRequest)
-    });
-}
-
-export function signup(signupRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/signup",
-        method: 'POST',
-        body: JSON.stringify(signupRequest)
-    });
-}
+// export function login(loginRequest) {
+//     return request({
+//         url: API_BASE_URL + "/auth/login",
+//         method: 'POST',
+//         body: JSON.stringify(loginRequest)
+//     });
+// }
+//
+// export function signup(signupRequest) {
+//     return request({
+//         url: API_BASE_URL + "/auth/signup",
+//         method: 'POST',
+//         body: JSON.stringify(signupRequest)
+//     });
+// }

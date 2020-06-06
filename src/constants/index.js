@@ -1,5 +1,6 @@
 export const API_BASE_URL = 'http://localhost:8084';
 export const ACCESS_TOKEN = 'accessToken';
+export const CURRENT_USER = 'currentUser';
 
 export const OAUTH2_REDIRECT_URI = 'http://localhost:3000/oauth2/redirect'
 

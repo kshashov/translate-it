@@ -1,7 +1,8 @@
-import { API_BASE_URL, ACCESS_TOKEN, CURRENT_USER } from '../constants'
+import { API_BASE_URL, ACCESS_TOKEN } from '../constants'
+import { Alert } from './Utils'
 
 export const request = (options) => {
-  const headers = new Headers({
+    const headers = new Headers({
     'Content-Type': 'application/json'
   })
 
@@ -16,10 +17,9 @@ export const request = (options) => {
     .then(response =>
       response.json().then(json => {
         if (response.status === 401) {
-          localStorage.removeItem(CURRENT_USER)
-          // Alert.error('User is not found. Try to refresh the page or relogin to the app')
+          Alert.error('User not found. Try to refresh the page or relogin to the app')
         } else if (response.status === 403) {
-          // Alert.error('You have no permission to perform this action')
+          Alert.error('You have no permission to perform this action')
         }
 
         if (!response.ok) {

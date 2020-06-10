@@ -1,5 +1,6 @@
 <template>
   <v-row v-if="loading" justify="center" class="mx-10">
+    <snackbar/>
     <v-progress-circular
       indeterminate
       color="primary"
@@ -7,11 +8,14 @@
     </v-progress-circular>
   </v-row>
   <v-app v-else :style="{background: $vuetify.theme.themes[isDark].background}">
+    <snackbar/>
     <app-bar/>
     <v-content>
       <v-row justify="center" class="fill-height ma-0">
         <v-container class="pa-0">
-          <protected-component :key="$route.path"></protected-component>
+          <protected-component :key="$route.path">
+            <router-view/>
+          </protected-component>
         </v-container>
       </v-row>
     </v-content>
@@ -23,6 +27,7 @@
   import AppBar from './components/AppBar'
   import AppFooter from './components/AppFooter'
   import ProtectedComponent from './views/ProtectedComponent'
+  import Snackbar from './components/Snackbar'
 
   export default {
     name: 'App',
@@ -40,7 +45,8 @@
     components: {
       ProtectedComponent,
       AppFooter,
-      AppBar
+      AppBar,
+      Snackbar
     }
   }
 </script>

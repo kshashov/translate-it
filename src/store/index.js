@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { ACCESS_TOKEN } from '../constants'
 import { getCurrentUser } from '../utils/APIUtils'
 import router from '../router'
+import { snackbar } from './snackbar'
 
 Vue.use(Vuex)
 
@@ -51,5 +52,7 @@ export default new Vuex.Store({
         })
     }
   },
-  modules: {}
+  modules: {
+    snack: snackbar
+  }
 })

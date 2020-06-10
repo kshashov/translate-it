@@ -1,11 +1,13 @@
 <template>
   <forbidden v-if="!hasAccess"/>
-  <router-view v-else></router-view>
+  <div class="fill-height" v-else>
+    <slot></slot>
+  </div>
 </template>
 
 <script>
   import Forbidden from './Forbidden'
-  import { hasPermissions } from '../utils/Utils'
+  import { hasRoutePermissions } from '../utils/Utils'
 
   export default {
     name: 'ProtectedComponent',
@@ -14,7 +16,9 @@
     },
     computed: {
       hasAccess () {
-        return hasPermissions(this.$store, this.$router)
+        return hasRoutePermissions(
+          this.$store.state.user,
+          this.$router.currentRoute)
       }
     },
     components: {

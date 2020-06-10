@@ -1,32 +1,46 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-row v-if="loading" justify="center" class="mx-10">
+    <v-progress-circular
+      indeterminate
+      color="primary"
+    >
+    </v-progress-circular>
+  </v-row>
+  <v-app v-else :style="{background: $vuetify.theme.themes[isDark].background}">
+    <app-bar/>
+    <v-content>
+      <v-row justify="center" class="fill-height ma-0">
+        <v-container class="pa-0">
+          <protected-component :key="$route.path"></protected-component>
+        </v-container>
+      </v-row>
+    </v-content>
+    <app-footer/>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+  import AppBar from './components/AppBar'
+  import AppFooter from './components/AppFooter'
+  import ProtectedComponent from './views/ProtectedComponent'
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  export default {
+    name: 'App',
+    data: () => ({
+      loading: true
+    }),
+    computed: {
+      isDark () {
+        return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+      }
+    },
+    beforeMount () {
+      this.loading = false
+    },
+    components: {
+      ProtectedComponent,
+      AppFooter,
+      AppBar
+    }
+  }
+</script>

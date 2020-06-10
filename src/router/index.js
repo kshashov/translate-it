@@ -94,6 +94,8 @@ router.beforeEach(async (to, from, next) => {
       name: 'Login'
     })
   } else {
+    // Validate user permissions to have required route permissions
+    await store.commit('validatePermissions', to.meta.permissions)
     next()
   }
 })

@@ -1,13 +1,13 @@
 <template>
   <forbidden v-if="!hasAccess"/>
-  <div class="fill-height" v-else>
+  <div v-else class="fill-height">
     <slot></slot>
   </div>
 </template>
 
 <script>
   import Forbidden from './Forbidden'
-  import { hasRoutePermissions } from '../utils/Utils'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'ProtectedComponent',
@@ -15,11 +15,7 @@
       return {}
     },
     computed: {
-      hasAccess () {
-        return hasRoutePermissions(
-          this.$store.state.user,
-          this.$router.currentRoute)
-      }
+      ...mapState(['hasAccess'])
     },
     components: {
       Forbidden

@@ -1,11 +1,10 @@
 import store from '../store'
 
-export function hasRoutePermissions (user, route) {
+export function hasPermissions (user, permissions) {
   if (!user) {
     return false
   }
 
-  const permissions = route.meta.permissions
   return !permissions || permissions.every(p => user.permissions.includes(p))
 }
 

@@ -4,21 +4,27 @@ import { ACCESS_TOKEN } from '../constants'
 import { getCurrentUser } from '../utils/APIUtils'
 import router from '../router'
 import { snackbar } from './snackbar'
+import { hasPermissions } from '../utils/Utils'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: undefined
+    user: undefined,
+    hasAccess: false
   },
   getters: {
     user: state => state.user,
-    authenticated: state => !!state.user
+    authenticated: state => !!state.user,
+    hasAccess: state => state.hasAccess
   },
   mutations: {
     login (state, user) {
       state.user = user
       state.authenticated = true
+    },
+    validatePermissions (state, permissions) {
+      state.hasAccess = hasPermissions(state.user, permissions)
     },
     logout (state) {
       state.user = undefined

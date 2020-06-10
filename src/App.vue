@@ -13,7 +13,7 @@
     <v-content>
       <v-row justify="center" class="fill-height ma-0">
         <v-container class="pa-0">
-          <protected-component :key="$route.path">
+          <protected-component>
             <router-view/>
           </protected-component>
         </v-container>

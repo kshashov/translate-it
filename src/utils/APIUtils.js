@@ -17,7 +17,7 @@ export const request = (options) => {
     .then(response =>
       response.json().then(json => {
         if (response.status === 401) {
-          Alert.error('User not found. Try to refresh the page or relogin to the app')
+          Alert.error('User not found. Try to refresh the page or relogin')
         } else if (response.status === 403) {
           Alert.error('You have no permission to perform this action')
         }

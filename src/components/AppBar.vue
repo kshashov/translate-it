@@ -16,7 +16,7 @@
       <span class="mr-2">Sign In</span>
     </v-btn>
 
-    <v-btn v-if="authenticated" to="Users" text rounded>
+    <v-btn v-if="authenticated" :to="{name:'Users'}" text rounded>
       <span class="mr-2">Users</span>
     </v-btn>
 

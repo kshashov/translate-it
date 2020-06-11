@@ -21,14 +21,12 @@ export default new Vuex.Store({
   mutations: {
     login (state, user) {
       state.user = user
-      state.authenticated = true
     },
     validatePermissions (state, permissions) {
       state.hasAccess = hasPermissions(state.user, permissions)
     },
     logout (state) {
       state.user = undefined
-      state.authenticated = false
     }
   },
   actions: {

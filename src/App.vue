@@ -39,6 +39,11 @@
         return (this.$vuetify.theme.dark) ? 'dark' : 'light'
       }
     },
+    watch: {
+      $route (to, from) {
+        document.title = to.meta.title || 'Translates'
+      }
+    },
     beforeMount () {
       this.loading = false
     },

@@ -1,33 +1,38 @@
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants'
 import { Alert } from './Utils'
+import * as axios from 'axios'
 
-export const request = (options) => {
-    const headers = new Headers({
+const fetchClient = axios.create({
+  baseURL: API_BASE_URL,
+  method: 'get',
+  headers: {
     'Content-Type': 'application/json'
-  })
-
-  if (localStorage.getItem(ACCESS_TOKEN)) {
-    headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
   }
+})
 
-  const defaults = { headers: headers }
-  options = Object.assign({}, defaults, options)
+// Set the AUTH token for any request
+fetchClient.interceptors.request.use(function (config) {
+  const token = localStorage.getItem(ACCESS_TOKEN)
+  config.headers.Authorization = token ? `Bearer ${token}` : ''
+  return config
+})
 
-  return fetch(options.url, options)
-    .then(response =>
-      response.json().then(json => {
-        if (response.status === 401) {
-          Alert.error('User not found. Try to refresh the page or relogin')
-        } else if (response.status === 403) {
-          Alert.error('You have no permission to perform this action')
-        }
+export default fetchClient
 
-        if (!response.ok) {
-          return Promise.reject(json)
-        }
-        return json
-      })
-    )
+export const request = async (options) => {
+  try {
+    const response = await fetchClient(options)
+    return response.data
+  } catch (error) {
+    if (error.response.status === 401) {
+      Alert.error('User not found. Try to refresh the page or relogin')
+    } else if (error.response.status === 403) {
+      Alert.error('You have no permission to perform this action')
+    }
+
+    console.log(error)
+    throw error
+  }
 }
 
 export function getCurrentUser () {
@@ -36,7 +41,7 @@ export function getCurrentUser () {
   }
 
   return request({
-    url: API_BASE_URL + '/api/users/me',
+    url: '/api/users/me',
     method: 'GET'
   })
 }

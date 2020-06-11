@@ -7,6 +7,7 @@ import OAuth2RedirectHandler from '../views/OAuth2RedirectHandler'
 import Profile from '../views/Profile'
 import store from '../store/'
 import Forbidden from '../views/Forbidden'
+import Users from '../views/Users/Users'
 
 Vue.use(VueRouter)
 
@@ -16,24 +17,27 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      allowAnonymous: true
+      allowAnonymous: true,
+      title: 'Home'
     }
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
     meta: {
       allowAnonymous: false,
-      permissions: ['HUI']
+      title: 'My profile'
+    }
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users,
+    meta: {
+      allowAnonymous: false,
+      permissions: ['MANAGE_USERS'],
+      title: 'Users'
     }
   },
   {
@@ -41,7 +45,8 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: {
-      allowAnonymous: true
+      allowAnonymous: true,
+      title: 'Login'
     }
   },
   {
@@ -65,7 +70,8 @@ const routes = [
     name: 'NotFound',
     component: NotFound,
     meta: {
-      allowAnonymous: true
+      allowAnonymous: true,
+      title: 'Page not found'
     }
   }
 ]
@@ -95,7 +101,7 @@ router.beforeEach(async (to, from, next) => {
     })
   } else {
     // Validate user permissions to have required route permissions
-    await store.commit('validatePermissions', to.meta.permissions)
+    store.commit('validatePermissions', to.meta.permissions)
     next()
   }
 })

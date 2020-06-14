@@ -1,5 +1,5 @@
 <template>
-  <v-container class="text-center" fill-height>
+  <v-container class="text-center" fill-height fluid>
     <v-row align="center">
       <v-col>
         <p class="display-2 primary--text">{{title}}</p>

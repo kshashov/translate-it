@@ -9,14 +9,14 @@
         <v-icon>mdi-home</v-icon>
       </v-btn>
     </v-app-bar-nav-icon>
-    <v-toolbar-title>Translates</v-toolbar-title>
+    <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
 
     <v-btn v-if="!authenticated" :to="{name:'Login'}" text rounded>
       <span class="mr-2">Sign In</span>
     </v-btn>
 
-    <v-btn v-if="authenticated" :to="{name:'Users'}" text rounded>
+    <v-btn v-if="authenticated && hasUsersPermission" :to="{name:'Users'}" text rounded>
       <span class="mr-2">Users</span>
     </v-btn>
 
@@ -44,18 +44,21 @@
 </template>
 
 <script>
+  import { mapGetters, mapState } from 'vuex'
+  import { hasPermissions } from '../utils/Utils'
+  import { requiredPermissions } from '../constants'
+
   export default {
     name: 'AppBar',
     data: function () {
       return {}
     },
     computed: {
-      user () {
-        return this.$store.getters.user
+      hasUsersPermission () {
+        return hasPermissions(this.user, requiredPermissions.manageUsers)
       },
-      authenticated () {
-        return this.$store.getters.authenticated
-      }
+      ...mapGetters(['user', 'authenticated']),
+      ...mapState(['title'])
     },
     methods: {
       logout: function (event) {

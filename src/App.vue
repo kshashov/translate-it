@@ -1,18 +1,18 @@
 <template>
   <v-row v-if="loading" justify="center" class="mx-10">
-    <snackbar/>
-    <v-progress-circular
-      indeterminate
-      color="primary"
-    >
-    </v-progress-circular>
+    <v-col cols="12">
+      <snackbar/>
+      <v-progress-circular
+        indeterminate
+        color="primary"/>
+    </v-col>
   </v-row>
   <v-app v-else :style="{background: $vuetify.theme.themes[isDark].background}">
     <snackbar/>
     <app-bar/>
     <v-content>
       <v-row justify="center" class="fill-height ma-0">
-        <v-container class="pa-0">
+        <v-container style="max-width: 900px" class="pa-0" fluid>
           <protected-component>
             <router-view/>
           </protected-component>

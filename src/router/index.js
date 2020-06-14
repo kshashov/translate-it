@@ -8,6 +8,7 @@ import Profile from '../views/Profile'
 import store from '../store/'
 import Forbidden from '../views/Forbidden'
 import Users from '../views/Users/Users'
+import { requiredPermissions } from '../constants'
 
 Vue.use(VueRouter)
 
@@ -36,7 +37,7 @@ const routes = [
     component: Users,
     meta: {
       allowAnonymous: false,
-      permissions: ['MANAGE_USERS'],
+      permissions: requiredPermissions.manageUsers,
       title: 'Users'
     }
   },
@@ -104,6 +105,11 @@ router.beforeEach(async (to, from, next) => {
     store.commit('validatePermissions', to.meta.permissions)
     next()
   }
+})
+
+router.beforeResolve((to, from, next) => {
+  store.commit('title', to.meta.title)
+  next()
 })
 
 export default router

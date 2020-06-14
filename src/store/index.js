@@ -10,11 +10,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    title: '',
     user: undefined,
     hasAccess: false
   },
   getters: {
     user: state => state.user,
+    permissions: state => state.user ? state.user.permissions : undefined,
     authenticated: state => !!state.user,
     hasAccess: state => state.hasAccess
   },
@@ -27,6 +29,9 @@ export default new Vuex.Store({
     },
     logout (state) {
       state.user = undefined
+    },
+    title (state, title) {
+      state.title = title || 'Translates'
     }
   },
   actions: {

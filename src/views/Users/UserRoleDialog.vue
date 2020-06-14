@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="visible" v-if="visible" max-width="500px" persistent>
+  <v-dialog v-model="visible" v-if="visible" max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly" persistent>
     <v-card>
       <v-card-title>
         <span class="headline">Edit User</span>
@@ -9,10 +9,10 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="user.email" label="Email" readonly></v-text-field>
+              <v-text-field v-model="user.email" label="Email" disabled></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="user.name" label="Name" readonly></v-text-field>
+              <v-text-field v-model="user.name" label="Name" disabled></v-text-field>
             </v-col>
             <v-col cols="12" sm="12" md="12">
               <v-select
@@ -32,8 +32,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="this.close">Cancel</v-btn>
-        <v-btn color="blue darken-1" text @click="this.save">Save</v-btn>
+        <v-btn color="secondary" @click="this.close" text>Cancel</v-btn>
+        <v-btn color="success" @click="this.save">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -5,7 +5,6 @@
       :on-save="onUserUpdate"
       :on-close="closeDialog"
     />
-    <h1 class="title pb-2">Users</h1>
     <v-card>
       <v-card-title>
         <v-text-field
@@ -123,8 +122,7 @@
         }).then((result) => {
           this.getDataFromApi()
           this.closeDialog()
-        }).catch((error) => {
-          console.log(error)
+        }).catch(() => {
         })
       }
     }

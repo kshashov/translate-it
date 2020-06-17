@@ -16,14 +16,17 @@
       <span class="mr-2">Sign In</span>
     </v-btn>
 
-    <v-btn v-if="authenticated && hasUsersPermission" :to="{name:'Users'}" text rounded>
-      <span class="mr-2">Users</span>
+    <v-btn v-if="authenticated && hasUsersPermission" :to="{name:'Users'}" class="mr-2" small text rounded>
+      Users
+    </v-btn>
+
+    <v-btn v-if="authenticated && hasExercisesPermission" :to="{name:'Exercises'}" class="mr-2" small text rounded>
+      Exercises
     </v-btn>
 
     <v-menu v-if="authenticated" offset-y>
       <template v-slot:activator="{on}">
         <v-btn
-          class="ma-2"
           color="white lighten-2"
           v-on="on"
           text icon
@@ -56,6 +59,9 @@
     computed: {
       hasUsersPermission () {
         return hasPermissions(this.user, requiredPermissions.manageUsers)
+      },
+      hasExercisesPermission () {
+        return hasPermissions(this.user, requiredPermissions.manageExercises)
       },
       ...mapGetters(['user', 'authenticated']),
       ...mapState(['title'])

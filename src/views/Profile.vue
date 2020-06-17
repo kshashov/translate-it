@@ -69,6 +69,7 @@
     },
     methods: {
       save () {
+        this.$v.$touch()
         if (!this.$v.$invalid) {
           request({
             method: 'POST',

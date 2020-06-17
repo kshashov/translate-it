@@ -44,14 +44,20 @@
   import { request } from '../../utils/APIUtils'
 
   export default {
-    name: 'UserRoleDialog',
+    name: 'Exercise',
     props: {
       item: {
         type: Object,
         default: undefined
       },
-      onSave: Function,
-      onClose: Function
+      onSave: {
+        type: Function,
+        required: true
+      },
+      onClose: {
+        type: Function,
+        required: true
+      }
     },
     data: function () {
       return {

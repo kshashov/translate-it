@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import ErrorPage from './ErrorPage'
+  import ErrorPage from '../components/ErrorPage'
 
   export default {
     name: 'Forbidden',

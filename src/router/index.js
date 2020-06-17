@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import NotFound from '../views/NotFound'
 import Login from '../views/Login'
 import OAuth2RedirectHandler from '../views/OAuth2RedirectHandler'
 import Profile from '../views/Profile'
 import store from '../store/'
 import Forbidden from '../views/Forbidden'
-import Users from '../views/Users/Users'
+import Users from '../views/users/Users'
 import { requiredPermissions } from '../constants'
+import Exercises from '../views/exercises/Exercises'
+import Home from '../views/Home'
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,7 @@ const routes = [
     component: Home,
     meta: {
       allowAnonymous: true,
-      title: 'Home'
+      title: 'Translates'
     }
   },
   {
@@ -39,6 +40,16 @@ const routes = [
       allowAnonymous: false,
       permissions: requiredPermissions.manageUsers,
       title: 'Users'
+    }
+  },
+  {
+    path: '/exercises',
+    name: 'Exercises',
+    component: Exercises,
+    meta: {
+      allowAnonymous: false,
+      permissions: requiredPermissions.manageExercises,
+      title: 'Exercises'
     }
   },
   {

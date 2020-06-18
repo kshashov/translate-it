@@ -88,8 +88,7 @@
       },
       roleErrors () {
         const errors = []
-        if (!this.$v.user.role.$dirty) return errors
-        !this.$v.user.role.required && errors.push('Role is required.')
+        !this.$v.user.role.required && errors.push('Role is required')
         return errors
       }
     },

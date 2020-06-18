@@ -16,6 +16,7 @@
   import { request } from '../../utils/APIUtils'
   import UserRoleDialog from './UserRoleDialog'
   import UsersTable from './UsersTable'
+  import { Alert } from '../../utils/Utils'
 
   export default {
     name: 'Users',
@@ -25,7 +26,7 @@
         roles: undefined
       }
     },
-    beforeMount () {
+    mounted () {
       // load roles
       request({
         url: '/api/roles/',
@@ -47,6 +48,7 @@
           method: 'POST',
           data: JSON.stringify({ id: user.role.id })
         }).then((result) => {
+          Alert.success('User has been updated')
           this.$refs.table.getDataFromApi()
           this.closeDialog()
         }).catch(() => {

@@ -6,6 +6,7 @@ export const snackbar = {
   }),
   mutations: {
     setSnack (state, payload) {
+      console.log(payload)
       state.text = payload.text
       state.type = payload.type || 'info'
     }

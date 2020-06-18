@@ -24,16 +24,19 @@ export const request = async (options) => {
     const response = await fetchClient(options)
     return response.data
   } catch (error) {
-    if (error.response.status === 401) {
-      Alert.error('User not found. Try to refresh the page or relogin')
-    } else if (error.response.status === 403) {
-      Alert.error('You have no permission to perform this action')
-    } else if (error.response.data.message) {
-      Alert.error(error.response.data.message)
-    } else {
+    if (!error.response) {
       Alert.error('Unexpected error. Try again later')
+    } else {
+      if (error.response.status === 401) {
+        Alert.error('User not found. Try to refresh the page or relogin')
+      } else if (error.response.status === 403) {
+        Alert.error('You have no permission to perform this action')
+      } else if (error.response.data.message) {
+        Alert.error(error.response.data.message)
+      } else {
+        Alert.error('Unexpected error. Try again later')
+      }
     }
-
     console.log(error)
     throw error
   }

@@ -25,9 +25,9 @@
         const color = state.snack.type
 
         if (text !== '') {
-          this.show = true
           this.message = text
           this.color = color
+          this.show = true
         }
       })
     },

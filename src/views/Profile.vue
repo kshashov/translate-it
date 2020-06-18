@@ -61,7 +61,6 @@
     computed: {
       nameErrors () {
         const errors = []
-        if (!this.$v.name.$dirty) return errors
         !this.$v.name.required && errors.push('Name is required.')
         !this.$v.name.minLength && errors.push('Name must have at least 3 letters')
         return errors

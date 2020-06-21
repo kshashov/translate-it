@@ -6,12 +6,10 @@
       disabled
     ></v-text-field>
     <v-text-field
-      v-model="name"
+      v-model="$v.name.$model"
       :error-messages="nameErrors"
       label="Name"
       required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
     ></v-text-field>
     <v-text-field
       :value="role.title"

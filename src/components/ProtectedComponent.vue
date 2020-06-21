@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import Forbidden from './Forbidden'
+  import Forbidden from '../views/Forbidden'
   import { mapState } from 'vuex'
 
   export default {

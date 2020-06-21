@@ -19,7 +19,7 @@
   import { Alert } from '../../utils/Utils'
 
   export default {
-    name: 'Users',
+    name: 'UsersAdmin',
     data: function () {
       return {
         editedItem: undefined,

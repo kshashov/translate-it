@@ -78,8 +78,8 @@
       </template>
       <template v-slot:item.tags="{ item }">
         <v-tooltip :key="tag.id" v-for="tag in item.tags" top>
-          <template #activator="{on, attrs}">
-            <v-chip color="primary" v-on="on" v-bind="attrs" class="ma-1" small dark>
+          <template #activator="{on}">
+            <v-chip color="primary" v-on="on" class="ma-1" small dark>
               {{ tag.title }}
             </v-chip>
           </template>
@@ -87,17 +87,44 @@
         </v-tooltip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon
-          @click="() => { onEdit(item) }"
-          small
-          left
-        > mdi-pencil
-        </v-icon>
-        <v-icon
-          @click="() => { onDelete(item) }"
-          small
-        > mdi-delete
-        </v-icon>
+        <v-tooltip top>
+          <template #activator="{on}">
+            <v-icon
+              @click="onEdit(item)"
+              v-on="on"
+              small
+              left
+            > mdi-pencil
+            </v-icon>
+          </template>
+          Update info
+        </v-tooltip>
+
+        <v-tooltip top>
+          <template #activator="{on}">
+            <v-icon
+              @click="onEditSteps(item)"
+              v-on="on"
+              small
+              left
+            > mdi-pencil-outline
+            </v-icon>
+          </template>
+          Update steps
+        </v-tooltip>
+
+        <v-tooltip top>
+          <template #activator="{on}">
+            <v-icon
+              @click="onDelete(item)"
+              v-on="on"
+              small
+            > mdi-delete
+            </v-icon>
+          </template>
+          Delete
+        </v-tooltip>
+
       </template>
     </v-data-table>
   </v-card>
@@ -122,6 +149,10 @@
         required: true
       },
       onEdit: {
+        type: Function,
+        required: true
+      },
+      onEditSteps: {
         type: Function,
         required: true
       },

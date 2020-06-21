@@ -10,16 +10,14 @@
           <v-row>
             <v-col cols="12" sm="12" md="12">
               <v-text-field
-                v-model="exercise.title"
+                v-model="$v.exercise.title.$model"
                 :error-messages="titleErrors"
                 label="Title"
-                @input="$v.exercise.title.$touch()"
-                @blur="$v.exercise.title.$touch()"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="12" md="12">
               <v-select
-                v-model="exercise.tags"
+                v-model="$v.exercise.tags.$model"
                 :items="tagItems"
                 :error-messages="tagsErrors"
                 label="Tags"
@@ -29,37 +27,31 @@
                 clearable
                 small-chips
                 deletable-chips
-                multiple
-                @change="$v.exercise.tags.$touch()"
-                @blur="$v.exercise.tags.$touch()">
+                multiple>
               </v-select>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-select
-                v-model="exercise.from"
+                v-model="$v.exercise.from.$model"
                 :items="langItems"
                 :error-messages="fromErrors"
                 label="From"
                 :loading="!langItems"
                 item-text="title"
                 return-object
-                clearable
-                @change="$v.exercise.from.$touch()"
-                @blur="$v.exercise.from.$touch()">
+                clearable>
               </v-select>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-select
-                v-model="exercise.to"
+                v-model="$v.exercise.to.$model"
                 :items="langItems"
                 :error-messages="toErrors"
                 label="To"
                 :loading="!langItems"
                 item-text="title"
                 return-object
-                clearable
-                @change="$v.exercise.to.$touch()"
-                @blur="$v.exercise.to.$touch()">
+                clearable>
               </v-select>
             </v-col>
           </v-row>
@@ -76,9 +68,9 @@
 </template>
 
 <script>
-  import Vue from 'vue'
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
+  import lodash from 'lodash'
 
   export default {
     name: 'ExerciseDialog',
@@ -161,7 +153,7 @@
     watch: {
       item: function () {
         this.exercise = this.item
-          ? Vue.util.extend({}, this.item)
+          ? lodash.cloneDeep(this.item)
           : undefined
 
         if (this.exercise) {

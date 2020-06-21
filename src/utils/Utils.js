@@ -1,11 +1,15 @@
 import store from '../store'
 
 export function hasPermissions (user, permissions) {
+  if (!permissions || permissions.length === 0) {
+    return true
+  }
+
   if (!user) {
     return false
   }
 
-  return !permissions || permissions.every(p => user.permissions.includes(p))
+  return user && permissions.every(p => user.permissions.includes(p))
 }
 
 export const Alert = {

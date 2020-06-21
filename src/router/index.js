@@ -6,9 +6,9 @@ import OAuth2RedirectHandler from '../views/OAuth2RedirectHandler'
 import Profile from '../views/Profile'
 import store from '../store/'
 import Forbidden from '../views/Forbidden'
-import Users from '../views/users/Users'
+import UsersAdmin from '../views/users/UsersAdmin'
 import { requiredPermissions } from '../constants'
-import Exercises from '../views/exercises/Exercises'
+import ExercisesAdmin from '../views/exercises/ExercisesAdmin'
 import Home from '../views/Home'
 
 Vue.use(VueRouter)
@@ -33,9 +33,9 @@ const routes = [
     }
   },
   {
-    path: '/users',
-    name: 'Users',
-    component: Users,
+    path: '/admin/users',
+    name: 'UsersAdmin',
+    component: UsersAdmin,
     meta: {
       allowAnonymous: false,
       permissions: requiredPermissions.manageUsers,
@@ -43,9 +43,9 @@ const routes = [
     }
   },
   {
-    path: '/exercises',
-    name: 'Exercises',
-    component: Exercises,
+    path: '/admin/exercises',
+    name: 'ExercisesAdmin',
+    component: ExercisesAdmin,
     meta: {
       allowAnonymous: false,
       permissions: requiredPermissions.manageExercises,

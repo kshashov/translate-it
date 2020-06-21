@@ -1,10 +1,15 @@
 <template>
   <div class="pa-4">
+    <steps-dialog
+      :item="editedSteps"
+      :on-save="onSaveSteps"
+      :on-close="closeStepsDialog"
+    />
     <exercise-dialog
       :item="editedItem"
       :langs="langs"
       :tags="tags"
-      :on-save="onSave"
+      :on-save="onSaveExercise"
       :on-close="closeUpdateDialog"
     />
     <exercises-table
@@ -13,6 +18,7 @@
       :tags="tags"
       :on-delete="showDeleteDialog"
       :on-edit="showUpdateDialog"
+      :on-edit-steps="showStepsDialog"
       :on-create="showCreateDialog"
     />
   </div>
@@ -23,11 +29,13 @@
   import ExerciseDialog from './ExerciseDialog'
   import ExercisesTable from './ExercisesTable'
   import { Alert } from '../../utils/Utils'
+  import StepsDialog from './StepsDialog'
 
   export default {
-    name: 'Exercises',
+    name: 'ExercisesAdmin',
     data: function () {
       return {
+        editedSteps: undefined,
         editedItem: undefined,
         langs: undefined,
         tags: undefined
@@ -54,11 +62,9 @@
           this.langs = data
         })
       },
-      onSave (exercise) {
-        console.log('save exercise')
-        console.log(exercise)
+      onSaveExercise (exercise) {
         if (exercise.id !== undefined) {
-          return request({
+          request({
             url: '/api/exercises/' + exercise.id,
             method: 'PUT',
             data: JSON.stringify(exercise)
@@ -68,7 +74,7 @@
             this.closeUpdateDialog()
           })
         } else {
-          return request({
+          request({
             url: '/api/exercises/',
             method: 'POST',
             data: JSON.stringify(exercise)
@@ -79,14 +85,32 @@
           })
         }
       },
+      onSaveSteps (exerciseId, steps) {
+        request({
+          url: `/api/exercises/${exerciseId}/steps`,
+          method: 'POST',
+          data: JSON.stringify(steps)
+        }).then((result) => {
+          Alert.success('Steps have been updated')
+          this.closeStepsDialog()
+        })
+      },
       showCreateDialog () {
         this.editedItem = { creator: this.$store.state.user.info }
       },
-      closeUpdateDialog () {
-        this.editedItem = undefined
-      },
       showUpdateDialog (exercise) {
         this.editedItem = exercise
+      },
+      showStepsDialog (exercise) {
+        request({
+          url: `api/exercises/${exercise.id}/steps`,
+          method: 'GET'
+        }).then((result) => {
+          this.editedSteps = {
+            exerciseId: exercise.id,
+            steps: result
+          }
+        })
       },
       async showDeleteDialog (exercise) {
         if (await this.$root.$confirm('Delete', 'Are you sure?', { color: 'info' })) {
@@ -98,11 +122,18 @@
             this.$refs.table.getDataFromApi()
           })
         }
+      },
+      closeUpdateDialog () {
+        this.editedItem = undefined
+      },
+      closeStepsDialog () {
+        this.editedSteps = undefined
       }
     },
     components: {
       ExercisesTable,
-      ExerciseDialog
+      ExerciseDialog,
+      StepsDialog
     }
   }
 </script>

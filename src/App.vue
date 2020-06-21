@@ -29,7 +29,7 @@
 <script>
   import AppBar from './components/AppBar'
   import AppFooter from './components/AppFooter'
-  import ProtectedComponent from './views/ProtectedComponent'
+  import ProtectedComponent from './components/ProtectedComponent'
   import Snackbar from './components/Snackbar'
   import Confirm from './components/Confirm'
 

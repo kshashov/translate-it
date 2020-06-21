@@ -33,7 +33,7 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon
-          @click="() => onEdit(item)"
+          @click="onEdit(item)"
           small
         >
           mdi-pencil

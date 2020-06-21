@@ -16,16 +16,14 @@
             </v-col>
             <v-col cols="12" sm="12" md="12">
               <v-select
-                v-model="user.role"
+                v-model="$v.user.role.$model"
                 :items="roleItems"
                 :error-messages="roleErrors"
                 label="Role"
                 :loading="!roleItems"
                 item-text="title"
                 return-object
-                clearable
-                @change="$v.user.role.$touch()"
-                @blur="$v.user.role.$touch()">
+                clearable>
               </v-select>
 
             </v-col>
@@ -43,7 +41,7 @@
 </template>
 
 <script>
-  import Vue from 'vue'
+  import lodash from 'lodash'
   import { validationMixin } from 'vuelidate'
   import { required } from 'vuelidate/lib/validators'
 
@@ -95,7 +93,7 @@
     watch: {
       item: function () {
         this.user = this.item
-          ? Vue.util.extend({}, this.item)
+          ? lodash.cloneDeep(this.item)
           : undefined
       }
     },

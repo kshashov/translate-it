@@ -16,11 +16,11 @@
       <span class="mr-2">Sign In</span>
     </v-btn>
 
-    <v-btn v-if="authenticated && hasUsersPermission" :to="{name:'Users'}" class="mr-2" small text rounded>
+    <v-btn v-if="authenticated && hasUsersPermission" :to="{name:'UsersAdmin'}" class="mr-2" small text rounded>
       Users
     </v-btn>
 
-    <v-btn v-if="authenticated && hasExercisesPermission" :to="{name:'Exercises'}" class="mr-2" small text rounded>
+    <v-btn v-if="authenticated && hasExercisesPermission" :to="{name:'ExercisesAdmin'}" class="mr-2" small text rounded>
       Exercises
     </v-btn>
 

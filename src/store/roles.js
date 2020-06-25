@@ -1,4 +1,4 @@
-import { request } from '../utils/APIUtils'
+import fetchClient from '../plugins/axios'
 
 export const roles = {
   namespaced: true,
@@ -16,7 +16,7 @@ export const roles = {
         return
       }
 
-      request({
+      fetchClient({
         url: '/api/roles/',
         method: 'GET'
       }).then(data => {

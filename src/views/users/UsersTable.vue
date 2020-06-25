@@ -44,7 +44,6 @@
 </template>
 
 <script>
-  import { request } from '../../utils/APIUtils'
   import UserName from '../../components/UserName'
   import _ from 'lodash'
 
@@ -102,7 +101,7 @@
         const direction = sortDesc[0] ? 'desc' : 'asc'
         const sort = sortBy[0] || ''
 
-        return request({
+        return this.$http({
           url: '/api/users/',
           method: 'GET',
           params: {

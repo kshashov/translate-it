@@ -29,7 +29,6 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
-  import { request } from '../utils/APIUtils'
   import { Alert } from '../utils/Utils'
 
   export default {
@@ -68,7 +67,7 @@
       save () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
-          request({
+          this.$http({
             method: 'POST',
             url: '/api/users/' + this.$store.state.user.info.id,
             data: {

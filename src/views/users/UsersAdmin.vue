@@ -2,7 +2,6 @@
   <div class="pa-4">
     <user-role-dialog
       :item="editedItem"
-      :roles="roles"
       :on-save="updateUser"
       :on-close="closeDialog"
     />
@@ -13,17 +12,12 @@
 </template>
 
 <script>
-  import { request } from '../../utils/APIUtils'
   import UserRoleDialog from './UserRoleDialog'
   import UsersTable from './UsersTable'
   import { Alert } from '../../utils/Utils'
-  import RolesMixin from '../../mixins/RolesMixin'
 
   export default {
     name: 'UsersAdmin',
-    mixins: [
-      RolesMixin
-    ],
     data: function () {
       return {
         editedItem: undefined
@@ -37,7 +31,7 @@
         this.editedItem = undefined
       },
       updateUser (user) {
-        return request({
+        return this.$http({
           url: '/api/users/' + user.id + '/role',
           method: 'POST',
           data: JSON.stringify({ id: user.role.id })

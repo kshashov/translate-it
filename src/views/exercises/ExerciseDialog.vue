@@ -18,10 +18,10 @@
             <v-col cols="12" sm="12" md="12">
               <v-select
                 v-model="$v.exercise.tags.$model"
-                :items="tagItems"
+                :items="tags"
                 :error-messages="tagsErrors"
                 label="Tags"
-                :loading="!tagItems"
+                :loading="!tags"
                 item-text="title"
                 return-object
                 clearable
@@ -33,10 +33,10 @@
             <v-col cols="12" sm="6" md="6">
               <v-select
                 v-model="$v.exercise.from.$model"
-                :items="langItems"
+                :items="langs"
                 :error-messages="fromErrors"
                 label="From"
-                :loading="!langItems"
+                :loading="!langs"
                 item-text="title"
                 return-object
                 clearable>
@@ -45,10 +45,10 @@
             <v-col cols="12" sm="6" md="6">
               <v-select
                 v-model="$v.exercise.to.$model"
-                :items="langItems"
+                :items="langs"
                 :error-messages="toErrors"
                 label="To"
-                :loading="!langItems"
+                :loading="!langs"
                 item-text="title"
                 return-object
                 clearable>
@@ -71,20 +71,16 @@
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
   import lodash from 'lodash'
+  import LangsMixin from '../../mixins/LangsMixin'
+  import TagsMixin from '../../mixins/TagsMixin'
 
   export default {
     name: 'ExerciseDialog',
-    mixins: [validationMixin],
+    mixins: [validationMixin, LangsMixin, TagsMixin],
     props: {
       item: {
         type: Object,
         default: undefined
-      },
-      langs: {
-        type: Array
-      },
-      tags: {
-        type: Array
       },
       onSave: {
         type: Function,
@@ -121,12 +117,6 @@
     computed: {
       visible () {
         return !!this.exercise
-      },
-      langItems () {
-        return this.$props.langs
-      },
-      tagItems () {
-        return this.$props.tags
       },
       titleErrors () {
         const errors = []
@@ -169,10 +159,10 @@
         if (!this.$v.$invalid) {
           const exercise = {
             ...this.exercise,
-            creator: this.exercise.creator && this.exercise.creator.id,
-            from: this.exercise.from && this.exercise.from.id,
-            to: this.exercise.to && this.exercise.to.id,
-            tags: this.exercise.tags && this.exercise.tags.map((tag) => tag.id)
+            creator: lodash.get(this.exercise, 'creator.id'),
+            from: lodash.get(this.exercise, 'from.id'),
+            to: lodash.get(this.exercise, 'to.id'),
+            tags: lodash.get(this.exercise, 'tags', []).map((tag) => tag.id)
           }
 
           this.onSave(exercise)
@@ -184,7 +174,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-</style>

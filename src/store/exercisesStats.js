@@ -1,4 +1,4 @@
-import { request } from '../utils/APIUtils'
+import fetchClient from '../plugins/axios'
 
 export const exercisesStats = {
   namespaced: true,
@@ -12,7 +12,7 @@ export const exercisesStats = {
   },
   actions: {
     loadExercisesStats ({ commit }) {
-      return request({
+      return fetchClient({
         url: '/api/exercises/stats',
         method: 'GET'
       }).then(data => {

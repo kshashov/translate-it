@@ -44,17 +44,15 @@
   import lodash from 'lodash'
   import { validationMixin } from 'vuelidate'
   import { required } from 'vuelidate/lib/validators'
+  import RolesMixin from '../../mixins/RolesMixin'
 
   export default {
     name: 'UserRoleDialog',
-    mixins: [validationMixin],
+    mixins: [validationMixin, RolesMixin],
     props: {
       item: {
         type: Object,
         default: undefined
-      },
-      roles: {
-        type: Array
       },
       onSave: {
         type: Function,
@@ -80,9 +78,6 @@
     computed: {
       visible () {
         return !!this.user
-      },
-      roleItems () {
-        return this.$props.roles
       },
       roleErrors () {
         const errors = []

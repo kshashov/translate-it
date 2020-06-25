@@ -131,19 +131,17 @@
 </template>
 
 <script>
-  import { request } from '../../utils/APIUtils'
   import UserName from '../../components/UserName'
   import lodash from 'lodash'
+  import LangsMixin from '../../mixins/LangsMixin'
+  import TagsMixin from '../../mixins/TagsMixin'
 
   export default {
     name: 'ExercisesTable',
+    mixins: [
+      LangsMixin, TagsMixin
+    ],
     props: {
-      langs: {
-        type: Array
-      },
-      tags: {
-        type: Array
-      },
       onCreate: {
         type: Function,
         required: true
@@ -222,7 +220,7 @@
         this.loading = true
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
 
-        return request({
+        return this.$http({
           url: '/api/exercises/',
           method: 'Get',
           params: {
@@ -231,9 +229,9 @@
             sort: sortBy[0],
             direction: sortDesc[0] ? 'desc' : 'asc',
             filter: this.search,
-            from: this.filter.from && this.filter.from.id,
-            to: this.filter.to && this.filter.to.id,
-            tag: this.filter.tag && this.filter.tag.id
+            from: lodash.get(this.filter, 'from.id'),
+            to: lodash.get(this.filter, 'to.id'),
+            tag: lodash.get(this.filter, 'tag.id')
           }
         }).then(data => {
           this.loading = false

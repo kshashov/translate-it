@@ -115,10 +115,10 @@
 </template>
 
 <script>
-  import { request } from '../utils/APIUtils'
   import LangsMixin from '../mixins/LangsMixin'
   import TagsMixin from '../mixins/TagsMixin'
   import ExercisesStatsMixin from '../mixins/ExercisesStatsMixin'
+  import lodash from 'lodash'
 
   export default {
     name: 'Home',
@@ -154,15 +154,15 @@
       getDataFromApi () {
         this.loading = true
 
-        return request({
+        return this.$http({
           url: '/api/exercises/',
           method: 'GET',
           params: {
             page: this.options.page - 1,
             size: this.options.itemsPerPage,
-            from: this.options.from && this.options.from.id,
-            to: this.options.to && this.options.to.id,
-            tag: this.options.tag && this.options.tag.id
+            from: lodash.get(this.options, 'from.id'),
+            to: lodash.get(this.options, 'to.id'),
+            tag: lodash.get(this.options, 'tag.id')
           }
         }).then(data => {
           this.loading = false

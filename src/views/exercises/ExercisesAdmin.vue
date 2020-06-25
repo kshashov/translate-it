@@ -7,15 +7,11 @@
     />
     <exercise-dialog
       :item="editedItem"
-      :langs="langs"
-      :tags="tags"
       :on-save="onSaveExercise"
       :on-close="closeUpdateDialog"
     />
     <exercises-table
       ref="table"
-      :langs="langs"
-      :tags="tags"
       :on-delete="showDeleteDialog"
       :on-edit="showUpdateDialog"
       :on-edit-steps="showStepsDialog"
@@ -25,19 +21,13 @@
 </template>
 
 <script>
-  import { request } from '../../utils/APIUtils'
   import ExerciseDialog from './ExerciseDialog'
   import ExercisesTable from './ExercisesTable'
   import { Alert } from '../../utils/Utils'
   import StepsDialog from './StepsDialog'
-  import LangsMixin from '../../mixins/LangsMixin'
-  import TagsMixin from '../../mixins/TagsMixin'
 
   export default {
     name: 'ExercisesAdmin',
-    mixins: [
-      LangsMixin, TagsMixin
-    ],
     data: function () {
       return {
         editedSteps: undefined,
@@ -47,7 +37,7 @@
     methods: {
       onSaveExercise (exercise) {
         if (exercise.id !== undefined) {
-          request({
+          this.$http({
             url: '/api/exercises/' + exercise.id,
             method: 'PUT',
             data: JSON.stringify(exercise)
@@ -57,7 +47,7 @@
             this.closeUpdateDialog()
           })
         } else {
-          request({
+          this.$http({
             url: '/api/exercises/',
             method: 'POST',
             data: JSON.stringify(exercise)
@@ -69,7 +59,7 @@
         }
       },
       onSaveSteps (exerciseId, steps) {
-        request({
+        this.$http({
           url: `/api/exercises/${exerciseId}/steps`,
           method: 'POST',
           data: JSON.stringify(steps)
@@ -91,7 +81,7 @@
         this.editedItem = exercise
       },
       showStepsDialog (exercise) {
-        request({
+        this.$http({
           url: `api/exercises/${exercise.id}/steps`,
           method: 'GET'
         }).then((result) => {
@@ -103,7 +93,7 @@
       },
       async showDeleteDialog (exercise) {
         if (await this.$root.$confirm('Delete', 'Are you sure?', { color: 'info' })) {
-          request({
+          this.$http({
             url: '/api/exercises/' + exercise.id,
             method: 'DELETE'
           }).then(() => {

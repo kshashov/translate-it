@@ -1,14 +1,14 @@
 <template>
   <span>
     <slot v-bind:item="user">
-      {{user.name}}
-    </slot>
-    <v-chip
+    <v-badge
       v-if="sameUser"
-      class="ml-1"
-      x-small>
-      You
-    </v-chip>
+      content="You"
+      color="grey"
+      top>
+      {{user.name}}
+    </v-badge>
+    </slot>
   </span>
 </template>
 

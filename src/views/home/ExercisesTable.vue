@@ -50,13 +50,11 @@
           {{ tag.title }}
         </v-tooltip>
       </template>
-      </template>
     </v-data-table>
   </v-card>
 </template>
 
 <script>
-  import { request } from '../../utils/APIUtils'
   import UserName from '../../components/UserName'
   import _ from 'lodash'
 
@@ -147,7 +145,7 @@
         this.loading = true
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
 
-        return request({
+        return this.$http({
           url: '/api/exercises/',
           method: 'Get',
           params: {

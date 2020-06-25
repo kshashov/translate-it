@@ -1,4 +1,4 @@
-import { request } from '../utils/APIUtils'
+import fetchClient from '../plugins/axios'
 
 export const langs = {
   namespaced: true,
@@ -16,7 +16,7 @@ export const langs = {
         return
       }
 
-      return request({
+      return fetchClient({
         url: '/api/langs/',
         method: 'GET'
       }).then(data => {

@@ -30,38 +30,21 @@
   import ExercisesTable from './ExercisesTable'
   import { Alert } from '../../utils/Utils'
   import StepsDialog from './StepsDialog'
+  import LangsMixin from '../../mixins/LangsMixin'
+  import TagsMixin from '../../mixins/TagsMixin'
 
   export default {
     name: 'ExercisesAdmin',
+    mixins: [
+      LangsMixin, TagsMixin
+    ],
     data: function () {
       return {
         editedSteps: undefined,
-        editedItem: undefined,
-        langs: undefined,
-        tags: undefined
+        editedItem: undefined
       }
     },
-    mounted () {
-      this.loadLangs()
-      this.loadTags()
-    },
     methods: {
-      loadTags () {
-        return request({
-          url: '/api/tags/',
-          method: 'GET'
-        }).then(data => {
-          this.tags = data
-        })
-      },
-      loadLangs () {
-        return request({
-          url: '/api/langs/',
-          method: 'GET'
-        }).then(data => {
-          this.langs = data
-        })
-      },
       onSaveExercise (exercise) {
         if (exercise.id !== undefined) {
           request({
@@ -96,7 +79,13 @@
         })
       },
       showCreateDialog () {
-        this.editedItem = { creator: this.$store.state.user.info }
+        this.editedItem = {
+          title: undefined,
+          tags: undefined,
+          from: undefined,
+          to: undefined,
+          creator: this.$store.state.user.info
+        }
       },
       showUpdateDialog (exercise) {
         this.editedItem = exercise

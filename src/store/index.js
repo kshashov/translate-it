@@ -5,6 +5,10 @@ import { getCurrentUser } from '../utils/APIUtils'
 import router from '../router'
 import { snackbar } from './snackbar'
 import { hasPermissions } from '../utils/Utils'
+import { langs } from './langs'
+import { tags } from './tags'
+import { roles } from './roles'
+import { exercisesStats } from './exercisesStats'
 
 Vue.use(Vuex)
 
@@ -62,6 +66,10 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    snack: snackbar
+    snack: snackbar,
+    langs: langs,
+    tags: tags,
+    roles: roles,
+    exercisesStats: exercisesStats
   }
 })

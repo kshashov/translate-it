@@ -1,19 +1,107 @@
 <template>
   <div class="pa-4">
-    <v-row justify="center" class="pa-4">
-      <v-progress-circular
-        indeterminate
-        color="primary"
-        v-if="loading"
-      />
-      <v-col v-else :v-cols="4">
-        <v-card
-          :key="exercise.id"
-          v-for="exercise in exercises"
-        >
+    <v-row justify="start">
+      <v-col cols="12">
+        <v-card tile>
+          <v-card-text>
+            <v-row justify="end">
+              <v-col cols="4">
+                <v-combobox
+                  v-model="options.tag"
+                  :items="tags"
+                  label="Category"
+                  :loading="!tags"
+                  item-text="title"
+                  hide-details
+                  return-object
+                  clearable
+                  outlined
+                  dense
+                >
+                  <template v-slot:item="{ item }">
+                    <v-badge
+                      :content="exercisesStats.byTags[item.id]"
+                      :value="!!exercisesStats && (exercisesStats.byTags[item.id] !== 0)"
+                      inline>{{item.title}}
+                    </v-badge>
+                  </template>
+                </v-combobox>
+              </v-col>
+            </v-row>
+            <v-row justify="end">
+              <v-col cols="4">
+                <v-combobox
+                  v-model="options.from"
+                  :items="langs"
+                  label="From"
+                  :loading="!langs"
+                  item-text="title"
+                  hide-details
+                  return-object
+                  clearable
+                  outlined
+                  dense
+                >
+                  <template v-slot:item="{ item }">
+                    <v-badge
+                      :content="exercisesStats.byFrom[item.id]"
+                      :value="!!exercisesStats && (exercisesStats.byFrom[item.id] !== 0)"
+                      inline>{{item.title}}
+                    </v-badge>
+                  </template>
+                </v-combobox>
+              </v-col>
+              <v-col cols="4">
+                <v-combobox
+                  v-model="options.to"
+                  :items="langs"
+                  label="To"
+                  :loading="!langs"
+                  item-text="title"
+                  hide-details
+                  return-object
+                  clearable
+                  outlined
+                  dense
+                >
+                  <template v-slot:item="{ item }">
+                    <v-badge
+                      :content="exercisesStats.byTo[item.id]"
+                      :value="!!exercisesStats && (exercisesStats.byTo[item.id] !== 0)"
+                      inline>{{item.title}}
+                    </v-badge>
+                  </template>
+                </v-combobox>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-progress-linear
+            indeterminate
+            color="primary"
+            :active="loading"
+            absolute
+            bottom
+          />
+        </v-card>
+      </v-col>
+
+      <v-col
+        :cols="4"
+        :key="exercise.id"
+        v-for="exercise in exercises"
+      >
+        <v-card>
+          <v-card-subtitle>
+            {{exercise.from.code}} - {{exercise.from.code}}
+          </v-card-subtitle>
           <v-card-title>
             {{exercise.title}}
           </v-card-title>
+          <v-card-text>
+            <v-chip :key="tag.id" v-for="tag in exercise.tags" class="ma-1">
+              {{tag.title}}
+            </v-chip>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -28,19 +116,26 @@
 
 <script>
   import { request } from '../utils/APIUtils'
+  import LangsMixin from '../mixins/LangsMixin'
+  import TagsMixin from '../mixins/TagsMixin'
+  import ExercisesStatsMixin from '../mixins/ExercisesStatsMixin'
 
   export default {
     name: 'Home',
-    components: {},
+    mixins: [
+      LangsMixin, TagsMixin, ExercisesStatsMixin
+    ],
     data: function () {
       return {
-        editedItem: undefined,
         totalExercises: 0,
         exercises: [],
         loading: true,
         options: {
           page: 1,
-          itemsPerPage: 10
+          itemsPerPage: 10,
+          from: undefined,
+          to: undefined,
+          tag: undefined
         }
       }
     },
@@ -60,8 +155,15 @@
         this.loading = true
 
         return request({
-          url: `/api/exercises/?page=${this.options.page - 1}&size=${this.options.itemsPerPage}`,
-          method: 'GET'
+          url: '/api/exercises/',
+          method: 'GET',
+          params: {
+            page: this.options.page - 1,
+            size: this.options.itemsPerPage,
+            from: this.options.from && this.options.from.id,
+            to: this.options.to && this.options.to.id,
+            tag: this.options.tag && this.options.tag.id
+          }
         }).then(data => {
           this.loading = false
           this.exercises = data.items
@@ -70,25 +172,9 @@
           this.loading = false
           this.exercises = []
         })
-      },
-      showEditDialog (item) {
-        this.editedItem = item
-      },
-      closeDialog () {
-        this.editedItem = undefined
-      },
-      onUserUpdate (user) {
-        return request({
-          url: '/api/users/' + user.id + '/role',
-          method: 'POST',
-          data: JSON.stringify({ id: user.role.id })
-        }).then((result) => {
-          this.getDataFromApi()
-          this.closeDialog()
-        }).catch(() => {
-        })
       }
-    }
+    },
+    components: {}
   }
 </script>
 

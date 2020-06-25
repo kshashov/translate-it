@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>
+    <v-card-text>
       <v-text-field
         v-model.lazy="search"
         append-icon="mdi-magnify"
@@ -9,7 +9,7 @@
         hide-details
         clearable
       ></v-text-field>
-    </v-card-title>
+    </v-card-text>
     <v-data-table
       :headers="headers"
       :items="desserts"

@@ -17,23 +17,17 @@
   import UserRoleDialog from './UserRoleDialog'
   import UsersTable from './UsersTable'
   import { Alert } from '../../utils/Utils'
+  import RolesMixin from '../../mixins/RolesMixin'
 
   export default {
     name: 'UsersAdmin',
+    mixins: [
+      RolesMixin
+    ],
     data: function () {
       return {
-        editedItem: undefined,
-        roles: undefined
+        editedItem: undefined
       }
-    },
-    mounted () {
-      // load roles
-      request({
-        url: '/api/roles/',
-        method: 'GET'
-      }).then(items => {
-        this.roles = items
-      })
     },
     methods: {
       showEditDialog (item) {

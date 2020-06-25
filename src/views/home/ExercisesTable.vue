@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>
+    <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn
         @click="onCreate"
@@ -11,8 +11,8 @@
         <v-icon left>mdi-plus-circle</v-icon>
         Create
       </v-btn>
-    </v-card-title>
-    <v-card-text>
+    </v-card-actions>
+    <v-card-title>
       <v-row>
         <v-col cols="12" lg="6">
           <v-text-field
@@ -24,44 +24,8 @@
             clearable
           ></v-text-field>
         </v-col>
-        <v-col cols="4" lg="2">
-          <v-combobox
-            v-model="filter.tag"
-            :items="tags"
-            label="Category"
-            :loading="!tags"
-            item-text="title"
-            hide-details
-            return-object
-            clearable
-          ></v-combobox>
-        </v-col>
-        <v-col cols="4" lg="2">
-          <v-combobox
-            v-model="filter.from"
-            :items="langs"
-            label="From"
-            :loading="!langs"
-            item-text="title"
-            hide-details
-            return-object
-            clearable
-          ></v-combobox>
-        </v-col>
-        <v-col cols="4" lg="2">
-          <v-combobox
-            v-model="filter.to"
-            :items="langs"
-            label="To"
-            :loading="!langs"
-            item-text="title"
-            hide-details
-            return-object
-            clearable
-          ></v-combobox>
-        </v-col>
       </v-row>
-    </v-card-text>
+    </v-card-title>
     <v-data-table
       :headers="headers"
       :items="exercises"
@@ -86,45 +50,6 @@
           {{ tag.title }}
         </v-tooltip>
       </template>
-      <template v-slot:item.actions="{ item }">
-        <v-tooltip top>
-          <template #activator="{on}">
-            <v-icon
-              @click="onEdit(item)"
-              v-on="on"
-              small
-              left
-            > mdi-pencil
-            </v-icon>
-          </template>
-          Update info
-        </v-tooltip>
-
-        <v-tooltip top>
-          <template #activator="{on}">
-            <v-icon
-              @click="onEditSteps(item)"
-              v-on="on"
-              small
-              left
-            > mdi-pencil-outline
-            </v-icon>
-          </template>
-          Update steps
-        </v-tooltip>
-
-        <v-tooltip top>
-          <template #activator="{on}">
-            <v-icon
-              @click="onDelete(item)"
-              v-on="on"
-              small
-            > mdi-delete
-            </v-icon>
-          </template>
-          Delete
-        </v-tooltip>
-
       </template>
     </v-data-table>
   </v-card>
@@ -133,7 +58,7 @@
 <script>
   import { request } from '../../utils/APIUtils'
   import UserName from '../../components/UserName'
-  import lodash from 'lodash'
+  import _ from 'lodash'
 
   export default {
     name: 'ExercisesTable',
@@ -207,7 +132,7 @@
         },
         deep: true
       },
-      search: lodash.debounce(function () {
+      search: _.debounce(function () {
         this.getDataFromApi()
       }, 1000),
       filter: {

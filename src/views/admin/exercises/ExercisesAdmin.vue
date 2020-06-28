@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4">
+  <fragment>
     <steps-dialog
       :item="editedSteps"
       :on-save="onSaveSteps"
@@ -17,14 +17,15 @@
       :on-edit-steps="showStepsDialog"
       :on-create="showCreateDialog"
     />
-  </div>
+  </fragment>
 </template>
 
 <script>
   import ExerciseDialog from './ExerciseDialog'
   import ExercisesTable from './ExercisesTable'
-  import { Alert } from '../../utils/Utils'
+  import { Alert } from '../../../utils/Utils'
   import StepsDialog from './StepsDialog'
+  import { Fragment } from 'vue-fragment'
 
   export default {
     name: 'ExercisesAdmin',
@@ -112,7 +113,8 @@
     components: {
       ExercisesTable,
       ExerciseDialog,
-      StepsDialog
+      StepsDialog,
+      Fragment
     }
   }
 </script>

@@ -71,8 +71,8 @@
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
   import lodash from 'lodash'
-  import LangsMixin from '../../mixins/LangsMixin'
-  import TagsMixin from '../../mixins/TagsMixin'
+  import LangsMixin from '../../../mixins/LangsMixin'
+  import TagsMixin from '../../../mixins/TagsMixin'
 
   export default {
     name: 'ExerciseDialog',

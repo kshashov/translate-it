@@ -10,20 +10,20 @@ import { roles } from './roles'
 import { exercisesStats } from './exercisesStats'
 import lodash from 'lodash'
 import { definePermissions } from '../plugins/casl'
+import { appBar } from './appBar'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    title: '',
+    loading: false,
     user: undefined,
     hasAccess: false
   },
   getters: {
     user: state => state.user,
     permissions: state => lodash.get(state.user, 'permissions'),
-    authenticated: state => !!state.user,
-    hasAccess: state => state.hasAccess
+    authenticated: state => !!state.user
   },
   mutations: {
     login (state, user) {
@@ -36,9 +36,6 @@ export default new Vuex.Store({
     logout (state) {
       state.user = undefined
       definePermissions(null)
-    },
-    title (state, title) {
-      state.title = title || 'Translates'
     }
   },
   actions: {
@@ -73,6 +70,7 @@ export default new Vuex.Store({
     langs: langs,
     tags: tags,
     roles: roles,
-    exercisesStats: exercisesStats
+    exercisesStats: exercisesStats,
+    appBar: appBar
   }
 })

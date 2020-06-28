@@ -24,6 +24,13 @@
       Exercises
     </v-btn>
 
+    <v-progress-linear
+      indeterminate
+      color="white"
+      :active="loading"
+      absolute
+      bottom/>
+
     <v-menu v-if="canLogout" offset-y>
       <template v-slot:activator="{on}">
         <v-btn
@@ -47,10 +54,11 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import AppBarMixin from '../mixins/AppBarMixin'
 
   export default {
     name: 'AppBar',
+    mixins: [AppBarMixin],
     data: function () {
       return {}
     },
@@ -72,8 +80,7 @@
       },
       canLogout () {
         return this.$can('view', 'Logout')
-      },
-      ...mapState(['title'])
+      }
     },
     methods: {
       logout: function (event) {
@@ -82,7 +89,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-</style>

@@ -2,10 +2,10 @@
   <span>
     <slot v-bind:item="user">
     <v-badge
-      v-if="sameUser"
+      :value="sameUser"
       content="You"
       color="grey"
-      top>
+      inline>
       {{user.name}}
     </v-badge>
     </slot>

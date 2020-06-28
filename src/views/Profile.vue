@@ -1,5 +1,5 @@
 <template>
-  <form class="pa-4">
+  <form>
     <v-text-field
       :value="email"
       label="Email"

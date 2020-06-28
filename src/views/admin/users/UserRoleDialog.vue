@@ -44,7 +44,7 @@
   import lodash from 'lodash'
   import { validationMixin } from 'vuelidate'
   import { required } from 'vuelidate/lib/validators'
-  import RolesMixin from '../../mixins/RolesMixin'
+  import RolesMixin from '../../../mixins/RolesMixin'
 
   export default {
     name: 'UserRoleDialog',

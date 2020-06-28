@@ -16,7 +16,6 @@ export const exercisesStats = {
         url: '/api/exercises/stats',
         method: 'GET'
       }).then(data => {
-        console.log(data)
         commit('setExercisesStats', data)
       })
     }

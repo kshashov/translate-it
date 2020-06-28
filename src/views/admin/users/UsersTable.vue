@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import UserName from '../../components/UserName'
+  import UserName from '../../../components/UserName'
   import _ from 'lodash'
 
   export default {

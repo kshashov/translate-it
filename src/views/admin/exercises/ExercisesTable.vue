@@ -131,10 +131,10 @@
 </template>
 
 <script>
-  import UserName from '../../components/UserName'
+  import UserName from '../../../components/UserName'
   import lodash from 'lodash'
-  import LangsMixin from '../../mixins/LangsMixin'
-  import TagsMixin from '../../mixins/TagsMixin'
+  import LangsMixin from '../../../mixins/LangsMixin'
+  import TagsMixin from '../../../mixins/TagsMixin'
 
   export default {
     name: 'ExercisesTable',

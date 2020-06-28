@@ -14,7 +14,7 @@
       <app-bar/>
       <v-content>
         <v-row justify="center" class="fill-height ma-0">
-          <v-container style="max-width: 1000px" class="pa-0" fluid>
+          <v-container style="max-width: 1000px" class="pa-4" fluid>
             <protected-component>
               <router-view/>
             </protected-component>
@@ -32,6 +32,7 @@
   import ProtectedComponent from './components/ProtectedComponent'
   import Snackbar from './components/Snackbar'
   import Confirm from './components/Confirm'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'App',
@@ -41,11 +42,12 @@
     computed: {
       isDark () {
         return (this.$vuetify.theme.dark) ? 'dark' : 'light'
-      }
+      },
+      ...mapState('appBar', ['title'])
     },
     watch: {
-      $route (to, from) {
-        document.title = to.meta.title || 'Translates'
+      title (to) {
+        document.title = to
       }
     },
     beforeMount () {

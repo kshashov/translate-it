@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4">
+  <fragment>
     <user-role-dialog
       :item="editedItem"
       :on-save="updateUser"
@@ -8,13 +8,14 @@
     <users-table
       ref="table"
       :on-edit="showEditDialog"/>
-  </div>
+  </fragment>
 </template>
 
 <script>
   import UserRoleDialog from './UserRoleDialog'
   import UsersTable from './UsersTable'
-  import { Alert } from '../../utils/Utils'
+  import { Alert } from '../../../utils/Utils'
+  import { Fragment } from 'vue-fragment'
 
   export default {
     name: 'UsersAdmin',
@@ -45,7 +46,8 @@
     },
     components: {
       UsersTable,
-      UserRoleDialog
+      UserRoleDialog,
+      Fragment
     }
   }
 </script>

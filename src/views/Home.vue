@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4">
+  <fragment>
     <v-row justify="start">
       <v-col cols="12">
         <v-card tile>
@@ -16,8 +16,7 @@
                   return-object
                   clearable
                   outlined
-                  dense
-                >
+                  dense>
                   <template v-slot:item="{ item }">
                     <v-badge
                       :content="exercisesStats.byTags[item.id]"
@@ -40,8 +39,7 @@
                   return-object
                   clearable
                   outlined
-                  dense
-                >
+                  dense>
                   <template v-slot:item="{ item }">
                     <v-badge
                       :content="exercisesStats.byFrom[item.id]"
@@ -62,8 +60,7 @@
                   return-object
                   clearable
                   outlined
-                  dense
-                >
+                  dense>
                   <template v-slot:item="{ item }">
                     <v-badge
                       :content="exercisesStats.byTo[item.id]"
@@ -80,29 +77,19 @@
             color="primary"
             :active="loading"
             absolute
-            bottom
-          />
+            bottom/>
         </v-card>
       </v-col>
 
       <v-col
-        :cols="4"
+        cols="6"
+        sm="4"
+        xl="3"
         :key="exercise.id"
         v-for="exercise in exercises"
       >
-        <v-card>
-          <v-card-subtitle>
-            {{exercise.from.code}} - {{exercise.from.code}}
-          </v-card-subtitle>
-          <v-card-title>
-            {{exercise.title}}
-          </v-card-title>
-          <v-card-text>
-            <v-chip :key="tag.id" v-for="tag in exercise.tags" class="ma-1">
-              {{tag.title}}
-            </v-chip>
-          </v-card-text>
-        </v-card>
+        <ExerciseCard
+          :exercise="exercise"/>
       </v-col>
     </v-row>
 
@@ -111,7 +98,7 @@
       :length="totalExercises"
       :total-visible="5"
     ></v-pagination>
-  </div>
+  </fragment>
 </template>
 
 <script>
@@ -119,6 +106,8 @@
   import TagsMixin from '../mixins/TagsMixin'
   import ExercisesStatsMixin from '../mixins/ExercisesStatsMixin'
   import lodash from 'lodash'
+  import ExerciseCard from './home/ExerciseCard'
+  import { Fragment } from 'vue-fragment'
 
   export default {
     name: 'Home',
@@ -132,7 +121,7 @@
         loading: true,
         options: {
           page: 1,
-          itemsPerPage: 10,
+          itemsPerPage: 20,
           from: undefined,
           to: undefined,
           tag: undefined
@@ -174,7 +163,7 @@
         })
       }
     },
-    components: {}
+    components: { ExerciseCard, Fragment }
   }
 </script>
 

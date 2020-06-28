@@ -4,11 +4,12 @@ import { ACCESS_TOKEN } from '../constants'
 import { getCurrentUser } from '../utils/APIUtils'
 import router from '../router'
 import { snackbar } from './snackbar'
-import { hasPermissions } from '../utils/Utils'
 import { langs } from './langs'
 import { tags } from './tags'
 import { roles } from './roles'
 import { exercisesStats } from './exercisesStats'
+import lodash from 'lodash'
+import { definePermissions } from '../plugins/casl'
 
 Vue.use(Vuex)
 
@@ -20,19 +21,21 @@ export default new Vuex.Store({
   },
   getters: {
     user: state => state.user,
-    permissions: state => state.user ? state.user.permissions : undefined,
+    permissions: state => lodash.get(state.user, 'permissions'),
     authenticated: state => !!state.user,
     hasAccess: state => state.hasAccess
   },
   mutations: {
     login (state, user) {
       state.user = user
+      definePermissions(user)
     },
-    validatePermissions (state, permissions) {
-      state.hasAccess = hasPermissions(state.user, permissions)
+    setHasAccess (state, hasAccess) {
+      state.hasAccess = hasAccess
     },
     logout (state) {
       state.user = undefined
+      definePermissions(null)
     },
     title (state, title) {
       state.title = title || 'Translates'

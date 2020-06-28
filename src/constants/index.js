@@ -9,7 +9,7 @@ export const GOOGLE_AUTH_URL = API_BASE_URL + '/oauth2/authorize/google?redirect
 export const FACEBOOK_AUTH_URL = API_BASE_URL + '/oauth2/authorize/facebook?redirect_uri='
 export const GITHUB_AUTH_URL = API_BASE_URL + '/oauth2/authorize/github?redirect_uri='
 
-export const requiredPermissions = {
-  manageUsers: ['MANAGE_USERS'],
-  manageExercises: ['MANAGE_EXERCISES']
+export const permissions = {
+  manageUsers: 'MANAGE_USERS',
+  manageExercises: 'MANAGE_EXERCISES'
 }

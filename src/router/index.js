@@ -7,9 +7,9 @@ import Profile from '../views/Profile'
 import store from '../store/'
 import Forbidden from '../views/Forbidden'
 import UsersAdmin from '../views/users/UsersAdmin'
-import { requiredPermissions } from '../constants'
 import ExercisesAdmin from '../views/exercises/ExercisesAdmin'
 import Home from '../views/Home'
+import ability from '../plugins/casl'
 
 Vue.use(VueRouter)
 
@@ -28,7 +28,6 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta: {
-      allowAnonymous: false,
       title: 'My profile'
     }
   },
@@ -37,8 +36,6 @@ const routes = [
     name: 'UsersAdmin',
     component: UsersAdmin,
     meta: {
-      allowAnonymous: false,
-      permissions: requiredPermissions.manageUsers,
       title: 'Users'
     }
   },
@@ -47,8 +44,6 @@ const routes = [
     name: 'ExercisesAdmin',
     component: ExercisesAdmin,
     meta: {
-      allowAnonymous: false,
-      permissions: requiredPermissions.manageExercises,
       title: 'Exercises'
     }
   },
@@ -74,7 +69,8 @@ const routes = [
     name: 'Forbidden',
     component: Forbidden,
     meta: {
-      allowAnonymous: true
+      allowAnonymous: true,
+      title: 'Page is forbidden'
     }
   },
   {
@@ -113,7 +109,7 @@ router.beforeEach(async (to, from, next) => {
     })
   } else {
     // Validate user permissions to have required route permissions
-    store.commit('validatePermissions', to.meta.permissions)
+    store.commit('setHasAccess', ability.can('view', to.name))
     next()
   }
 })

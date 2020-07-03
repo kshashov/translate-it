@@ -10,7 +10,7 @@
           <v-row>
             <v-col cols="12" sm="12" md="12">
               <v-text-field
-                v-model="$v.exercise.title.$model"
+                v-model.trim="$v.exercise.title.$model"
                 :error-messages="titleErrors"
                 label="Title"
               ></v-text-field>

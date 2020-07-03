@@ -12,7 +12,7 @@
     <v-app v-else :style="{background: $vuetify.theme.themes[isDark].background}">
       <snackbar/>
       <app-bar/>
-      <v-content>
+      <v-main>
         <v-row justify="center" class="fill-height ma-0">
           <v-container style="max-width: 1000px" class="pa-4" fluid>
             <protected-component>
@@ -20,7 +20,7 @@
             </protected-component>
           </v-container>
         </v-row>
-      </v-content>
+      </v-main>
       <app-footer/>
     </v-app>
   </v-flex>

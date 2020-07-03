@@ -16,7 +16,7 @@
       <v-row>
         <v-col cols="12" lg="6">
           <v-text-field
-            v-model="search"
+            v-model.trim="search"
             append-icon="mdi-magnify"
             label="Search by Title or Creator"
             single-line

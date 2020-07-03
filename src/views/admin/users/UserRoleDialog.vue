@@ -9,10 +9,10 @@
         <v-container>
           <v-row>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="user.email" label="Email" disabled></v-text-field>
+              <v-text-field v-model.trim="user.email" label="Email" disabled></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="user.name" label="Name" disabled></v-text-field>
+              <v-text-field v-model.trim="user.name" label="Name" disabled></v-text-field>
             </v-col>
             <v-col cols="12" sm="12" md="12">
               <v-select

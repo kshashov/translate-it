@@ -20,7 +20,7 @@
                   <template v-slot:item="{ item }">
                     <v-badge
                       :content="exercisesStats.byTags[item.id]"
-                      :value="!!exercisesStats && (exercisesStats.byTags[item.id] !== 0)"
+                      :value="!!exercisesStats && exercisesStats.byTags[item.id]"
                       inline>{{item.title}}
                     </v-badge>
                   </template>
@@ -43,7 +43,7 @@
                   <template v-slot:item="{ item }">
                     <v-badge
                       :content="exercisesStats.byFrom[item.id]"
-                      :value="!!exercisesStats && (exercisesStats.byFrom[item.id] !== 0)"
+                      :value="!!exercisesStats && exercisesStats.byFrom[item.id]"
                       inline>{{item.title}}
                     </v-badge>
                   </template>
@@ -64,7 +64,7 @@
                   <template v-slot:item="{ item }">
                     <v-badge
                       :content="exercisesStats.byTo[item.id]"
-                      :value="!!exercisesStats && (exercisesStats.byTo[item.id] !== 0)"
+                      :value="!!exercisesStats && exercisesStats.byTo[item.id]"
                       inline>{{item.title}}
                     </v-badge>
                   </template>

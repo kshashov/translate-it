@@ -4,7 +4,7 @@
       <v-card-title>
         <v-input
           :error-messages="stepsErrors()"
-          :hide-details="stepsErrors().length === 0"
+          :hide-details="stepsErrors().length"
         >
           <span class="headline">Edit Steps</span>
         </v-input>
@@ -31,7 +31,7 @@
                 </v-card-title>
                 <v-card-text>
                   <v-text-field
-                    v-model="step.text.$model"
+                    v-model.trim="step.text.$model"
                     :error-messages="textErrors(step)"
                     label="Text"
                   ></v-text-field>
@@ -41,7 +41,7 @@
                         <v-card-title inset>
                           <v-input
                             :error-messages="answersErrors(step)"
-                            :hide-details="answersErrors(step).length === 0"
+                            :hide-details="answersErrors(step).length"
                           >
                             <span class="title">Answers</span>
                           </v-input>
@@ -54,7 +54,7 @@
                           <v-list-item :key="answerIndex" v-for="(answer, answerIndex) in step.answers.$each.$iter">
                             <v-list-item-title>
                               <v-text-field
-                                v-model="answer.text.$model"
+                                v-model.trim="answer.text.$model"
                                 :error-messages="answerTextErrors(answer)"
                                 :label="'Answer #'+(parseInt(answerIndex) + 1)"
                               ></v-text-field>
@@ -83,14 +83,14 @@
                               <v-row>
                                 <v-col cols="12" sm="6">
                                   <v-text-field
-                                    v-model="word.source.$model"
+                                    v-model.trim="word.source.$model"
                                     :error-messages="wordSourceErrors(word)"
                                     :label="'Word #'+(parseInt(wordIndex) + 1)"
                                   ></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6">
                                   <v-text-field
-                                    v-model="word.translation.$model"
+                                    v-model.trim="word.translation.$model"
                                     :error-messages="wordTranslationErrors(word)"
                                     :label="'Translation #'+(parseInt(wordIndex) + 1)"
                                   ></v-text-field>

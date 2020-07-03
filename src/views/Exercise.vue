@@ -5,7 +5,37 @@
       exact
       large
     />
-    <h2 v-if="!!exercise"> {{exercise.title}} </h2>
+    <div v-if="!loading" class="mx-4">
+      <ExerciseSummary
+        :exercise="exercise"
+        :steps="steps"/>
+      <v-row v-if="!authenticated">
+        <v-col cols="12" class="text-center pa-4">
+          <div class="text-overline">New words</div>
+          <div
+            :key="word.id"
+            v-for="word in words"
+            class="text-subtitle-1">
+            <span class="font-weight-bold">{{word.source}}</span>
+            &ndash;
+            {{word.translation}}
+          </div>
+        </v-col>
+        <v-col cols="12" class="text-center">
+          <v-btn
+            color="primary"
+            large
+          >Login
+          </v-btn>
+        </v-col>
+      </v-row>
+      <ExerciseSolver
+        v-else
+        :exercise="exercise"
+        :steps="steps"
+        :answers="answers"
+      />
+    </div>
   </fragment>
 </template>
 
@@ -13,6 +43,9 @@
 
   import AppBarMixin from '../mixins/AppBarMixin'
   import { Fragment } from 'vue-fragment'
+  import ExerciseSummary from './exercise/ExerciseSummary'
+  import { mapGetters } from 'vuex'
+  import ExerciseSolver from './exercise/ExerciseSolver'
 
   export default {
     name: 'Exercise',
@@ -26,6 +59,11 @@
     data () {
       return {
         exercise: undefined,
+        steps: undefined,
+        answers: {
+          0: [],
+          1: []
+        },
         links: [
           {
             text: 'Home',
@@ -40,15 +78,45 @@
         ]
       }
     },
+    computed: {
+      words () {
+        if (!this.steps) {
+          return []
+        }
+
+        return this.steps
+          .flatMap(s => s.words)
+      },
+      ...mapGetters(['authenticated'])
+    },
+    created () {
+      this.startLoading()
+    },
     mounted () {
       const self = this
-      this.$http.get('/api/exercises/' + this.id)
+
+      const exercisesLoading = this.$http
+        .get('/api/exercises/' + this.id)
         .then(exercise => {
+          self.links[1].text = exercise.title
           self.setTitle(exercise.title)
           self.exercise = exercise
         })
+
+      const stepsLoading = this.$http
+        .get(`/api/exercises/${this.id}/steps`)
+        .then((steps) => {
+          self.steps = steps
+        })
+
+      Promise.all([exercisesLoading, stepsLoading])
+        .then(() => self.stopLoading())
     },
     methods: {},
-    components: { Fragment }
+    components: {
+      ExerciseSolver,
+      ExerciseSummary,
+      Fragment
+    }
   }
 </script>

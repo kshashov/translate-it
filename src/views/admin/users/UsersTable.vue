@@ -2,7 +2,7 @@
   <v-card>
     <v-card-text>
       <v-text-field
-        v-model.lazy="search"
+        v-model.trim.lazy="search"
         append-icon="mdi-magnify"
         label="Search by Name or Email"
         single-line

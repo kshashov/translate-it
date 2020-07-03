@@ -6,7 +6,7 @@
       disabled
     ></v-text-field>
     <v-text-field
-      v-model="$v.name.$model"
+      v-model.trim="$v.name.$model"
       :error-messages="nameErrors"
       label="Name"
       required

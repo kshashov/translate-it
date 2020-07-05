@@ -12,7 +12,7 @@
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
 
-    <v-btn v-if="canLogin" :to="{name:'Login'}" text rounded>
+    <v-btn v-if="canLogin" @click="login" text rounded>
       <span class="mr-2">Sign In</span>
     </v-btn>
 
@@ -55,6 +55,7 @@
 
 <script>
   import AppBarMixin from '../mixins/AppBarMixin'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'AppBar',
@@ -83,9 +84,13 @@
       }
     },
     methods: {
+      login () {
+        this.setShowLogin(true)
+      },
       logout: function (event) {
         this.$store.dispatch('logout')
-      }
+      },
+      ...mapMutations(['setShowLogin'])
     }
   }
 </script>

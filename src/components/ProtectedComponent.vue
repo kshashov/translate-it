@@ -1,5 +1,6 @@
 <template>
-  <forbidden v-if="!hasAccess"/>
+  <sign-in v-if="!hasAccess && !authenticated"/>
+  <forbidden v-else-if="!hasAccess"/>
   <div v-else class="fill-height">
     <slot></slot>
   </div>
@@ -8,6 +9,7 @@
 <script>
   import Forbidden from '../views/Forbidden'
   import { mapState } from 'vuex'
+  import SignIn from '../views/SignIn'
 
   export default {
     name: 'ProtectedComponent',
@@ -15,9 +17,10 @@
       return {}
     },
     computed: {
-      ...mapState(['hasAccess'])
+      ...mapState(['hasAccess', 'authenticated'])
     },
     components: {
+      SignIn,
       Forbidden
     }
   }

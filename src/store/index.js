@@ -16,13 +16,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loading: false,
     user: undefined,
+    loading: false,
+    showLogin: false,
+    loginError: undefined,
     hasAccess: false
   },
   getters: {
-    user: state => state.user,
     permissions: state => lodash.get(state.user, 'permissions'),
+    userInfo: state => lodash.get(state.user, 'info'),
     authenticated: state => !!state.user
   },
   mutations: {
@@ -30,12 +32,20 @@ export default new Vuex.Store({
       state.user = user
       definePermissions(user)
     },
-    setHasAccess (state, hasAccess) {
-      state.hasAccess = hasAccess
-    },
     logout (state) {
       state.user = undefined
       definePermissions(null)
+    },
+    setHasAccess (state, hasAccess) {
+      state.hasAccess = hasAccess
+    },
+    setErrorAccess (state, error) {
+      state.loginError = error
+      state.showLogin = true
+    },
+    setShowLogin (state, showLogin) {
+      state.loginError = undefined
+      state.showLogin = showLogin
     }
   },
   actions: {

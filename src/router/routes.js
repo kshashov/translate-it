@@ -3,7 +3,6 @@ import Profile from '../views/Profile'
 import Exercise from '../views/Exercise'
 import UsersAdmin from '../views/admin/users/UsersAdmin'
 import ExercisesAdmin from '../views/admin/exercises/ExercisesAdmin'
-import Login from '../views/Login'
 import OAuth2RedirectHandler from '../views/OAuth2RedirectHandler'
 import Forbidden from '../views/Forbidden'
 import NotFound from '../views/NotFound'
@@ -49,15 +48,6 @@ export default [
     component: ExercisesAdmin,
     meta: {
       title: 'Exercises'
-    }
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      allowAnonymous: true,
-      title: 'Login'
     }
   },
   {

@@ -12,26 +12,18 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  if (((to.name === 'Login') || (to.name === 'OAuth2RedirectHandler')) && store.getters.authenticated) {
+  if ((to.name === 'OAuth2RedirectHandler') && store.getters.authenticated) {
     // If login is not needed then redirect to home
     next({ name: 'Home' })
-  } else if ((to.name === 'Login') && (!to.query.from)) {
-    // If Login then add 'from' query param
-    next({
-      name: 'Login',
-      query: {
-        ...to.query,
-        from: from.fullPath
-      }
-    })
-  } else if (!to.meta.allowAnonymous && !store.getters.authenticated) {
-    // If user is required but not found
-    next({
-      name: 'Login'
-    })
   } else {
+    // Show login dialog if necessary
+    if (!to.meta.allowAnonymous) {
+      store.commit('setShowLogin', !store.getters.authenticated)
+    }
+
     // Validate user permissions to have required route permissions
     store.commit('setHasAccess', ability.can('view', to.name))
+
     next()
   }
 })

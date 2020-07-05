@@ -9,6 +9,9 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
+  import router from '../router'
+
   export default {
     name: 'OAuth2RedirectHandler',
     data: function () {
@@ -23,25 +26,25 @@
         this.$store.dispatch('login', {
           token: this.token,
           from: this.from
+        }).catch(() => {
+          // Redirect if user not found
+          this.showErrorLogin()
         })
-          .catch(() => {
-            // Redirect if user not found
-            this.redirectLogin()
-          })
       } else {
         // Redirect if server error
-        this.redirectLogin()
+        this.showErrorLogin()
       }
     },
     methods: {
-      redirectLogin () {
-        this.$router.push({
-          name: 'Login',
-          query: {
-            error: this.error || 'Unexpected error'
-          }
-        })
-      }
+      showErrorLogin () {
+        // Redirect to from page
+        router.push(this.from || '/')
+          .finally(() => {
+            // Add login error
+            this.setErrorAccess(this.error || 'Unexpected error')
+          })
+      },
+      ...mapMutations(['setErrorAccess'])
     }
   }
 </script>

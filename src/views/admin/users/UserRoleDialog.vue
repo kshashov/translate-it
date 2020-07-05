@@ -17,10 +17,10 @@
             <v-col cols="12" sm="12" md="12">
               <v-select
                 v-model="$v.user.role.$model"
-                :items="roleItems"
+                :items="roles"
                 :error-messages="roleErrors"
                 label="Role"
-                :loading="!roleItems"
+                :loading="!roles"
                 item-text="title"
                 return-object
                 clearable>

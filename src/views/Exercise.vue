@@ -127,12 +127,10 @@
           for (let i = 0; i < self.steps.length; i++) {
             const stepId = self.steps[i].id
             if (!self.answers[stepId]) {
-              self.answers[stepId] = []
+              self.$set(self.answers, stepId + '', [])
             }
           }
-
-          self.stopLoading()
-        })
+        }).finally(() => self.stopLoading())
     },
     methods: {},
     components: {

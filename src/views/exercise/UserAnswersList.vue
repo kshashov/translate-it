@@ -13,7 +13,7 @@
 
     <v-card>
       <v-card-text>
-        <div :key="index" v-for="(answer, index) in answers" class="ma-2">
+        <div :key="index" v-for="(answer, index) in answersHistory" class="ma-2">
           <UserAnswerText :answer="answer"/>
         </div>
       </v-card-text>
@@ -29,6 +29,11 @@
       answers: {
         type: Array,
         required: true
+      }
+    },
+    computed: {
+      answersHistory () {
+        return this.answers
       }
     },
     methods: {

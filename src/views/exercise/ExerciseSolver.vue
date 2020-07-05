@@ -119,7 +119,7 @@
     methods: {
       submitAnswer (stepId, answer) {
         this.$http.post(API_USER_ANSWERS, {
-          userId: 0,
+          userId: this.$store.state.user.info.id,
           stepId: stepId,
           text: answer
         }).then(result => {
@@ -163,8 +163,10 @@
   .component-fade-enter-active, .component-fade-leave-active {
     transition: opacity .2s ease;
   }
+
   .component-fade-enter, .component-fade-leave-to
-    /* .component-fade-leave-active до версии 2.1.8 */ {
+    /* .component-fade-leave-active до версии 2.1.8 */
+  {
     opacity: 0;
   }
 </style>

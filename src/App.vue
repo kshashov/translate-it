@@ -12,6 +12,7 @@
     <v-app v-else :style="{background: $vuetify.theme.themes[isDark].background}">
       <snackbar/>
       <app-bar/>
+      <LoginDialog/>
       <v-main>
         <v-row justify="center" class="fill-height ma-0">
           <v-container style="max-width: 1000px" class="pa-4" fluid>
@@ -33,6 +34,7 @@
   import Snackbar from './components/Snackbar'
   import Confirm from './components/Confirm'
   import { mapState } from 'vuex'
+  import LoginDialog from './components/LoginDialog'
 
   export default {
     name: 'App',
@@ -57,6 +59,7 @@
       this.$root.$confirm = this.$refs.confirm.open
     },
     components: {
+      LoginDialog,
       ProtectedComponent,
       AppFooter,
       AppBar,

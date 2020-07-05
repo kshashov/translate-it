@@ -1,4 +1,5 @@
 import fetchClient from '../plugins/axios'
+import { API_TAGS } from '../constants/paths'
 
 export const tags = {
   namespaced: true,
@@ -17,7 +18,7 @@ export const tags = {
       }
 
       return fetchClient({
-        url: '/api/tags/',
+        url: API_TAGS,
         method: 'GET'
       }).then(data => {
         commit('setTags', data)

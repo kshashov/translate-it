@@ -1,5 +1,6 @@
 import { ACCESS_TOKEN } from '../constants'
 import fetchClient from '../plugins/axios'
+import { API_ME } from '../constants/paths'
 
 export function getCurrentUser () {
   if (!localStorage.getItem(ACCESS_TOKEN)) {
@@ -7,7 +8,7 @@ export function getCurrentUser () {
   }
 
   return fetchClient({
-    url: '/api/users/me',
+    url: API_ME,
     method: 'GET'
   })
 }

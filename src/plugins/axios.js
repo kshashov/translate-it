@@ -1,4 +1,5 @@
-import { API_BASE_URL, ACCESS_TOKEN } from '../constants'
+import { ACCESS_TOKEN } from '../constants'
+import { API_BASE_URL } from '../constants/paths'
 import { Alert } from '../utils/Utils'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'

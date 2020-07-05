@@ -4,7 +4,11 @@
       {{exercise.from.code}} - {{exercise.from.code}}
     </v-card-subtitle>
     <v-card-title>
-      <a @click="open"> {{exercise.title}} </a>
+      <a>
+        <router-link class="text-decoration-none" :to="{name: 'Exercise', params: { id: exercise.id }}">
+          {{exercise.title}}
+        </router-link>
+      </a>
     </v-card-title>
     <v-card-text>
       <v-chip :key="tag.id" v-for="tag in exercise.tags" class="ma-1">

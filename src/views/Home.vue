@@ -108,6 +108,7 @@
   import lodash from 'lodash'
   import ExerciseCard from './home/ExerciseCard'
   import { Fragment } from 'vue-fragment'
+  import { API_EXERCISES } from '../constants/paths'
 
   export default {
     name: 'Home',
@@ -144,7 +145,7 @@
         this.loading = true
 
         return this.$http({
-          url: '/api/exercises/',
+          url: API_EXERCISES,
           method: 'GET',
           params: {
             page: this.options.page - 1,

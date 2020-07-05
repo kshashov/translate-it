@@ -29,7 +29,8 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
-  import { Alert } from '../utils/Utils'
+  import { Alert, resolve } from '../utils/Utils'
+  import { API_USER } from '../constants/paths'
 
   export default {
     name: 'Profile',
@@ -69,7 +70,7 @@
         if (!this.$v.$invalid) {
           this.$http({
             method: 'POST',
-            url: '/api/users/' + this.$store.state.user.info.id,
+            url: resolve(API_USER, { userId: this.$store.state.user.info.id }),
             data: {
               name: this.name
             }

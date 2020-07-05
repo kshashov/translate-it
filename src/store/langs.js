@@ -1,4 +1,5 @@
 import fetchClient from '../plugins/axios'
+import { API_LANGS } from '../constants/paths'
 
 export const langs = {
   namespaced: true,
@@ -17,7 +18,7 @@ export const langs = {
       }
 
       return fetchClient({
-        url: '/api/langs/',
+        url: API_LANGS,
         method: 'GET'
       }).then(data => {
         commit('setLangs', data)

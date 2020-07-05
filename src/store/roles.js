@@ -1,4 +1,5 @@
 import fetchClient from '../plugins/axios'
+import { API_ROLES } from '../constants/paths'
 
 export const roles = {
   namespaced: true,
@@ -16,8 +17,8 @@ export const roles = {
         return
       }
 
-      fetchClient({
-        url: '/api/roles/',
+      return fetchClient({
+        url: API_ROLES,
         method: 'GET'
       }).then(data => {
         commit('setRoles', data)

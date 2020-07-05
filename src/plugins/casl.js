@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { abilitiesPlugin } from '@casl/vue'
 import { Ability, defineAbility } from '@casl/ability'
-import { permissions } from '../constants'
+import { permissions } from '../constants/permissions'
 
 const ability = new Ability()
 

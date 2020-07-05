@@ -11,7 +11,7 @@
         :steps="steps"/>
       <v-row v-if="!authenticated">
         <v-col cols="12" class="text-center pa-4">
-          <div class="text-overline">New words</div>
+          <div class="text-uppercase text-subtitle-1 py-4">Words</div>
           <div
             :key="word.id"
             v-for="word in words"
@@ -46,6 +46,8 @@
   import ExerciseSummary from './exercise/ExerciseSummary'
   import { mapGetters } from 'vuex'
   import ExerciseSolver from './exercise/ExerciseSolver'
+  import { API_EXERCISE, API_EXERCISE_STEPS, API_USER_ANSWERS } from '../constants/paths'
+  import { resolve } from '../utils/Utils'
 
   export default {
     name: 'Exercise',
@@ -60,10 +62,7 @@
       return {
         exercise: undefined,
         steps: undefined,
-        answers: {
-          0: [],
-          1: []
-        },
+        answers: undefined,
         links: [
           {
             text: 'Home',
@@ -96,7 +95,7 @@
       const self = this
 
       const exercisesLoading = this.$http
-        .get('/api/exercises/' + this.id)
+        .get(resolve(API_EXERCISE, { exerciseId: this.id }))
         .then(exercise => {
           self.links[1].text = exercise.title
           self.setTitle(exercise.title)
@@ -104,13 +103,36 @@
         })
 
       const stepsLoading = this.$http
-        .get(`/api/exercises/${this.id}/steps`)
+        .get(resolve(API_EXERCISE_STEPS, { exerciseId: this.id }))
         .then((steps) => {
           self.steps = steps
         })
 
-      Promise.all([exercisesLoading, stepsLoading])
-        .then(() => self.stopLoading())
+      let answersLoading = Promise.resolve()
+      if (this.$store.getters.authenticated) {
+        answersLoading = this.$http
+          .get(API_USER_ANSWERS, {
+            params: {
+              exerciseId: this.id,
+              userId: this.$store.state.user.info.id
+            }
+          }).then((answers) => {
+            self.answers = answers
+          })
+      }
+
+      Promise.all([exercisesLoading, stepsLoading, answersLoading])
+        .then(() => {
+          // Add empty answer arrays for missing steps
+          for (let i = 0; i < self.steps.length; i++) {
+            const stepId = self.steps[i].id
+            if (!self.answers[stepId]) {
+              self.answers[stepId] = []
+            }
+          }
+
+          self.stopLoading()
+        })
     },
     methods: {},
     components: {

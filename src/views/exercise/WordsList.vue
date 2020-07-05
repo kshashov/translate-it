@@ -9,6 +9,7 @@
 
           <span class="font-weight-bold">{{answer.translation}}</span>
         </v-tooltip>
+      <!-- hide for the last item -->
         <span v-if="index < words.length-1">, </span>
     </span>
   </div>

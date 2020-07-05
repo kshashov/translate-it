@@ -4,7 +4,7 @@
       <v-card-title>
         <v-input
           :error-messages="stepsErrors()"
-          :hide-details="stepsErrors().length"
+          :hide-details="stepsErrors().length === 0"
         >
           <span class="headline">Edit Steps</span>
         </v-input>
@@ -41,7 +41,7 @@
                         <v-card-title inset>
                           <v-input
                             :error-messages="answersErrors(step)"
-                            :hide-details="answersErrors(step).length"
+                            :hide-details="answersErrors(step).length === 0"
                           >
                             <span class="title">Answers</span>
                           </v-input>

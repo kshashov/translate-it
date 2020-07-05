@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import { OAUTH2_REDIRECT_URI, GOOGLE_AUTH_URL } from '../constants'
+  import { OAUTH2_REDIRECT_URI, GOOGLE_AUTH_URL } from '../constants/paths'
 
   export default {
     name: 'Login',

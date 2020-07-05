@@ -14,8 +14,9 @@
 <script>
   import UserRoleDialog from './UserRoleDialog'
   import UsersTable from './UsersTable'
-  import { Alert } from '../../../utils/Utils'
+  import { Alert, resolve } from '../../../utils/Utils'
   import { Fragment } from 'vue-fragment'
+  import { API_USER_ROLE } from '../../../constants/paths'
 
   export default {
     name: 'UsersAdmin',
@@ -33,7 +34,7 @@
       },
       updateUser (user) {
         return this.$http({
-          url: '/api/users/' + user.id + '/role',
+          url: resolve(API_USER_ROLE, { userId: user.id }),
           method: 'POST',
           data: JSON.stringify({ id: user.role.id })
         }).then((result) => {

@@ -46,6 +46,7 @@
 <script>
   import UserName from '../../../components/UserName'
   import _ from 'lodash'
+  import { API_USERS } from '../../../constants/paths'
 
   export default {
     name: 'UsersTable',
@@ -102,7 +103,7 @@
         const sort = sortBy[0] || ''
 
         return this.$http({
-          url: '/api/users/',
+          url: API_USERS,
           method: 'GET',
           params: {
             page: page - 1,

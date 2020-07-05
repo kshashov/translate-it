@@ -4,10 +4,12 @@
       translation:
     </div>
     <div class="text-h6 my-4">
-        <span
-          :key="index"
-          v-for="(word, index) in words"
-          :class="[word.fail? 'word-fail' : 'word-success']">
+      <span v-if="answer.success" class="word-success">{{answer.text}}</span>
+      <span
+        v-else
+        :key="index"
+        v-for="(word, index) in words"
+        :class="[word.fail? 'word-fail' : 'word-success']">
           <span
             v-if="!!word.empty"
             class="pa-1 word-space">...</span>
@@ -31,7 +33,7 @@
         type: Object,
         required: true
       },
-      answers: {
+      sources: {
         type: Array,
         required: true
       }
@@ -41,13 +43,16 @@
         return this.answer.text
       },
       words () {
+        if (this.answer.success) {
+          return undefined
+        }
+
         const target = this.answer.text.split(' ')
-        const sources = this.answers.map(s => s.text.split(' '))
 
         const result = []
-        for (let i = 0; i < sources.length; i++) {
+        for (let i = 0; i < this.sources.length; i++) {
           let sourceStart = 0
-          const source = sources[i]
+          const source = this.sources[i]
           let wordsCoveredByEmpty = 0
           result[i] = []
           for (const w in target) {
@@ -56,7 +61,7 @@
             for (let sourceW = sourceStart; sourceW < source.length; sourceW++) {
               if (word === source[sourceW]) {
                 // add space before match
-                if ((sourceW > sourceStart) && (sourceW > w)) {
+                if ((sourceW > sourceStart) && (sourceW > w + wordsCoveredByEmpty)) {
                   wordsCoveredByEmpty += sourceW - sourceStart - 1
                   result[i].push({
                     fail: true,

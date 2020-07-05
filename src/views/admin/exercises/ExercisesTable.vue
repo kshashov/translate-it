@@ -70,6 +70,15 @@
       :loading="loading"
       mobile-breakpoint="0"
     >
+      <template v-slot:item.title="{ item }">
+        <a>
+          <router-link
+            :to="{name: 'Exercise', params: { id: item.id }}"
+            target="_blank">
+            {{item.title}}
+          </router-link>
+        </a>
+      </template>
       <template v-slot:item.langs="{ item }">
         {{item.from.code}} — {{item.to.code}}
       </template>
@@ -135,6 +144,7 @@
   import lodash from 'lodash'
   import LangsMixin from '../../../mixins/LangsMixin'
   import TagsMixin from '../../../mixins/TagsMixin'
+  import { API_EXERCISES } from '../../../constants/paths'
 
   export default {
     name: 'ExercisesTable',
@@ -216,12 +226,18 @@
       }
     },
     methods: {
+      openExercise (exercise) {
+        this.$router.push({
+          name: 'Exercise',
+          params: { id: exercise.id }
+        })
+      },
       getDataFromApi () {
         this.loading = true
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
 
         return this.$http({
-          url: '/api/exercises/',
+          url: API_EXERCISES,
           method: 'Get',
           params: {
             page: page - 1,

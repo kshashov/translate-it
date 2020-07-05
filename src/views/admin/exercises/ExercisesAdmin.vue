@@ -23,9 +23,10 @@
 <script>
   import ExerciseDialog from './ExerciseDialog'
   import ExercisesTable from './ExercisesTable'
-  import { Alert } from '../../../utils/Utils'
+  import { Alert, resolve } from '../../../utils/Utils'
   import StepsDialog from './StepsDialog'
   import { Fragment } from 'vue-fragment'
+  import { API_EXERCISE, API_EXERCISE_STEPS, API_EXERCISES } from '../../../constants/paths'
 
   export default {
     name: 'ExercisesAdmin',
@@ -39,7 +40,7 @@
       onSaveExercise (exercise) {
         if (exercise.id !== undefined) {
           this.$http({
-            url: '/api/exercises/' + exercise.id,
+            url: resolve(API_EXERCISE, { exerciseId: exercise.id }),
             method: 'PUT',
             data: JSON.stringify(exercise)
           }).then((result) => {
@@ -49,7 +50,7 @@
           })
         } else {
           this.$http({
-            url: '/api/exercises/',
+            url: API_EXERCISES,
             method: 'POST',
             data: JSON.stringify(exercise)
           }).then((result) => {
@@ -61,7 +62,7 @@
       },
       onSaveSteps (exerciseId, steps) {
         this.$http({
-          url: `/api/exercises/${exerciseId}/steps`,
+          url: resolve(API_EXERCISE_STEPS, { exerciseId: exerciseId }),
           method: 'POST',
           data: JSON.stringify(steps)
         }).then((result) => {
@@ -83,7 +84,7 @@
       },
       showStepsDialog (exercise) {
         this.$http({
-          url: `api/exercises/${exercise.id}/steps`,
+          url: resolve(API_EXERCISE_STEPS, { exerciseId: exercise.id }),
           method: 'GET'
         }).then((result) => {
           this.editedSteps = {
@@ -95,7 +96,7 @@
       async showDeleteDialog (exercise) {
         if (await this.$root.$confirm('Delete', 'Are you sure?', { color: 'info' })) {
           this.$http({
-            url: '/api/exercises/' + exercise.id,
+            url: resolve(API_EXERCISE, { exerciseId: exercise.id }),
             method: 'DELETE'
           }).then(() => {
             Alert.success('Exercise has been deleted')

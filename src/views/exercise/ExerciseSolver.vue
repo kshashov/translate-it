@@ -1,6 +1,8 @@
 <template>
   <fragment>
-    <div class="text-center text-h6 my-4 text-overline"><v-chip color="accent" outlined>Your score: {{score}} / {{steps.length}}</v-chip></div>
+    <div class="text-center text-h6 my-4 text-overline">
+      <v-chip color="accent" outlined>Your score: {{score}} / {{steps.length}}</v-chip>
+    </div>
 
     <v-stepper v-model="position" vertical>
       <template v-for="(item, index) in steps">
@@ -24,21 +26,23 @@
             <AnswersList :answers="item.answers"/>
           </div>
           <div class="pb-2">
-            <template v-if="forceEditMode || !hasAnswers(item.id)">
-              <WordsList :words="item.words" class="ma-2"/>
-              <v-textarea v-model.trim="$v.answer.$model" rows="1" class="mb-2" auto-grow hide-details outlined/>
-              <v-btn
-                color="primary"
-                :disabled="$v.answer.$invalid"
-                @click="submitAnswer(item.id, answer)">Submit
-              </v-btn>
-            </template>
-            <div v-else class="text-center mb-2">
-              <div>
-                <UserAnswer :answers="item.answers" :answer="getLastAnswer(item.id)"/>
+            <transition name="component-fade" mode="out-in">
+              <div v-if="forceEditMode || !hasAnswers(item.id)" key="tr1">
+                <WordsList :words="item.words" class="ma-2"/>
+                <v-textarea v-model.trim="$v.answer.$model" rows="1" class="mb-2" auto-grow hide-details outlined/>
+                <v-btn
+                  color="primary"
+                  :disabled="$v.answer.$invalid"
+                  @click="submitAnswer(item.id, answer)">Submit
+                </v-btn>
               </div>
-              <v-btn @click="openSubmitForm(getLastAnswer(item.id))" color="primary">Try again</v-btn>
-            </div>
+              <div v-else class="text-center mb-2" key="tr2">
+                <div>
+                  <UserAnswer :sources="answersWords[index]" :answer="getLastAnswer(item.id)"/>
+                </div>
+                <v-btn @click="openSubmitForm(getLastAnswer(item.id))" color="primary">Try again</v-btn>
+              </div>
+            </transition>
           </div>
         </v-stepper-content>
       </template>
@@ -56,6 +60,7 @@
   import { required } from 'vuelidate/lib/validators'
   import UserAnswer from './UserAnswer'
   import { Fragment } from 'vue-fragment'
+  import { API_USER_ANSWERS } from '../../constants/paths'
 
   export default {
     name: 'ExerciseSolver',
@@ -88,6 +93,7 @@
     },
     watch: {
       position () {
+        // Wher step is selected
         this.forceEditMode = false
         this.answer = ''
       }
@@ -98,22 +104,29 @@
           return 0
         }
         return Object.entries(this.answers)
-          .filter(a => lodash.get(lodash.last(a[1]), 'success', false)) //
+          .filter(a => lodash.get(lodash.last(a[1]), 'success', false))
           .length
+      },
+      answersWords () {
+        if (!this.exercise) {
+          return []
+        }
+
+        return this.steps
+          .map(s => s.answers.map(a => a.text.split(' ')))
       }
     },
     methods: {
       submitAnswer (stepId, answer) {
-        // Remove double spaces
-        answer = answer.replace(/  +/g, ' ')
-        const result = {
-          text: answer,
-          success: true
-        }
-
-        // Save result and close form
-        this.answers[stepId].push(result)
-        this.closeSubmitForm()
+        this.$http.post(API_USER_ANSWERS, {
+          userId: 0,
+          stepId: stepId,
+          text: answer
+        }).then(result => {
+          // Save result locally and close form
+          this.answers[stepId].push(result)
+          this.closeSubmitForm()
+        })
       },
       openSubmitForm (answer) {
         this.answer = answer.text
@@ -145,5 +158,13 @@
     background: #00ffff00;
     border: 0;
     box-shadow: none
+  }
+
+  .component-fade-enter-active, .component-fade-leave-active {
+    transition: opacity .2s ease;
+  }
+  .component-fade-enter, .component-fade-leave-to
+    /* .component-fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
   }
 </style>

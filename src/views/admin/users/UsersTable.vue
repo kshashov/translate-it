@@ -12,12 +12,11 @@
     </v-card-text>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="users"
       :options.sync="options"
-      :server-items-length="totalDesserts"
+      :server-items-length="totalUsers"
       :loading="loading"
-      mobile-breakpoint="0"
-    >
+      mobile-breakpoint="0">
       <template v-slot:item.name="{ item }">
         <user-name :user="item"/>
       </template>
@@ -34,8 +33,7 @@
       <template v-slot:item.actions="{ item }">
         <v-icon
           @click="onEdit(item)"
-          small
-        >
+          small>
           mdi-pencil
         </v-icon>
       </template>
@@ -60,8 +58,8 @@
       return {
         search: '',
         loading: true,
-        totalDesserts: 0,
-        desserts: [],
+        totalUsers: 0,
+        users: [],
         options: {},
         headers: [
           {
@@ -114,11 +112,11 @@
           }
         }).then(data => {
           this.loading = false
-          this.desserts = data.items
-          this.totalDesserts = data.totalItems
+          this.users = data.items
+          this.totalUsers = data.totalItems
         }).catch(response => {
           this.loading = false
-          this.desserts = []
+          this.users = []
         })
       }
     },

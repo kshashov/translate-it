@@ -4,7 +4,6 @@ import Exercise from '../views/Exercise'
 import UsersAdmin from '../views/admin/users/UsersAdmin'
 import ExercisesAdmin from '../views/admin/exercises/ExercisesAdmin'
 import OAuth2RedirectHandler from '../views/OAuth2RedirectHandler'
-import Forbidden from '../views/Forbidden'
 import NotFound from '../views/NotFound'
 
 export default [
@@ -56,15 +55,6 @@ export default [
     component: OAuth2RedirectHandler,
     meta: {
       allowAnonymous: true
-    }
-  },
-  {
-    path: '/forbidden',
-    name: 'Forbidden',
-    component: Forbidden,
-    meta: {
-      allowAnonymous: true,
-      title: 'Page is forbidden'
     }
   },
   {

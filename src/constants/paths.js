@@ -14,6 +14,7 @@ export const API_ROLES = 'api/roles'
 export const API_USER_ANSWERS = 'api/userAnswers'
 
 export const API_EXERCISES = '/api/exercises'
+export const API_EXERCISES_USER = '/api/exercises/user'
 export const API_EXERCISES_STATS = '/api/exercises/stats'
 export const API_EXERCISE = '/api/exercises/:exerciseId'
 export const API_EXERCISE_STEPS = '/api/exercises/:exerciseId/steps'

@@ -6,13 +6,11 @@
       </v-card-title>
 
       <v-card-text>
-        <v-container>
-          <exercise-form
-            ref="exerciseForm"
-            :invalid.sync="invalid"
-            :item="exercise"
-            :on-save="this.onSave"/>
-        </v-container>
+        <exercise-form
+          ref="exerciseForm"
+          :invalid.sync="invalid"
+          :item="exercise"
+          :on-save="this.onSave"/>
       </v-card-text>
 
       <v-card-actions>

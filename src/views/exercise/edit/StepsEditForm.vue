@@ -1,13 +1,23 @@
 <template>
   <fragment>
+<!--    <v-alert v-if="dirty" type="info">-->
+<!--      You have unsaved changes.-->
+<!--    </v-alert>-->
+
     <steps-form
       ref="stepsForm"
       :item="steps"
       :on-save="onSave"
       :invalid.sync="invalid"
+      :dirty.sync="dirty"
     />
 
-    <v-btn color="success" :disabled="invalid" @click="save">Save</v-btn>
+    <v-btn
+      :disabled="invalid"
+      @click="save"
+      color="success">
+      Save Steps
+    </v-btn>
   </fragment>
 </template>
 
@@ -32,6 +42,7 @@
     data: function () {
       return {
         invalid: false,
+        dirty: false,
         steps: undefined
       }
     },

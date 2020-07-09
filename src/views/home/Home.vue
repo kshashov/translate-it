@@ -89,14 +89,14 @@
 </template>
 
 <script>
-  import LangsMixin from '../mixins/LangsMixin'
-  import TagsMixin from '../mixins/TagsMixin'
-  import ExercisesStatsMixin from '../mixins/ExercisesStatsMixin'
+  import LangsMixin from '../../mixins/LangsMixin'
+  import TagsMixin from '../../mixins/TagsMixin'
+  import ExercisesStatsMixin from '../../mixins/ExercisesStatsMixin'
   import lodash from 'lodash'
-  import ExerciseCard from './home/ExerciseCard'
+  import ExerciseCard from './ExerciseCard'
   import { Fragment } from 'vue-fragment'
-  import { API_EXERCISES_USER } from '../constants/paths'
-  import AppBarMixin from '../mixins/AppBarMixin'
+  import { API_EXERCISES_USER } from '../../constants/paths'
+  import AppBarMixin from '../../mixins/AppBarMixin'
 
   export default {
     name: 'Home',

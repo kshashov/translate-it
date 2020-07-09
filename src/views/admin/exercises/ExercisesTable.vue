@@ -99,32 +99,6 @@
         <v-tooltip top>
           <template #activator="{on}">
             <v-icon
-              @click="onEdit(item)"
-              v-on="on"
-              small
-              left
-            > mdi-pencil
-            </v-icon>
-          </template>
-          Update info
-        </v-tooltip>
-
-        <v-tooltip top>
-          <template #activator="{on}">
-            <v-icon
-              @click="onEditSteps(item)"
-              v-on="on"
-              small
-              left
-            > mdi-pencil-outline
-            </v-icon>
-          </template>
-          Update steps
-        </v-tooltip>
-
-        <v-tooltip top>
-          <template #activator="{on}">
-            <v-icon
               @click="onDelete(item)"
               v-on="on"
               small
@@ -153,14 +127,6 @@
     ],
     props: {
       onCreate: {
-        type: Function,
-        required: true
-      },
-      onEdit: {
-        type: Function,
-        required: true
-      },
-      onEditSteps: {
         type: Function,
         required: true
       },

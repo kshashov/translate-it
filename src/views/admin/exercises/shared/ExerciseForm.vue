@@ -1,14 +1,12 @@
 <template>
   <fragment>
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" class="py-0">
         <v-text-field
           v-model.trim="$v.exercise.title.$model"
           :error-messages="titleErrors"
           label="Title"
         ></v-text-field>
-      </v-col>
-      <v-col cols="12">
         <v-select
           v-model="$v.exercise.tags.$model"
           :items="tags"
@@ -23,7 +21,7 @@
           multiple>
         </v-select>
       </v-col>
-      <v-col cols="12" sm="6" md="6">
+      <v-col cols="12" sm="6" md="6" class="py-0">
         <v-select
           v-model="$v.exercise.from.$model"
           :items="langs"
@@ -35,7 +33,7 @@
           clearable>
         </v-select>
       </v-col>
-      <v-col cols="12" sm="6" md="6">
+      <v-col cols="12" sm="6" md="6" class="py-0">
         <v-select
           v-model="$v.exercise.to.$model"
           :items="langs"
@@ -58,10 +56,11 @@
   import lodash from 'lodash'
   import LangsMixin from '../../../../mixins/LangsMixin'
   import TagsMixin from '../../../../mixins/TagsMixin'
+  import FormValidationMixin from '../../../../mixins/FormValidationMixin'
 
   export default {
     name: 'ExerciseForm',
-    mixins: [validationMixin, LangsMixin, TagsMixin],
+    mixins: [validationMixin, LangsMixin, TagsMixin, FormValidationMixin],
     props: {
       item: {
         type: Object,
@@ -118,14 +117,7 @@
       }
     },
     watch: {
-      '$v.$invalid': function () {
-        this.$emit('update:invalid', this.$v.$invalid)
-      },
-      '$v.$anyDirty': function () {
-        this.$emit('update:dirty', this.$v.$anyDirty)
-      },
       item: function () {
-        console.log(this.item)
         this.updateExercise()
       }
     },

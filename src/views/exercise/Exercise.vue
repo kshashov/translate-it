@@ -6,6 +6,16 @@
       large
     />
     <div v-if="!loading" class="mx-4">
+      <div class="text-end">
+        <v-btn
+          v-if="canEdit"
+          @click="edit"
+          color="primary"
+          outlined small>
+          <v-icon small left>mdi-pencil</v-icon>
+          Edit
+        </v-btn>
+      </div>
       <ExerciseSummary
         :exercise="exercise"
         :steps="steps"/>
@@ -41,13 +51,13 @@
 
 <script>
 
-  import AppBarMixin from '../mixins/AppBarMixin'
+  import AppBarMixin from '../../mixins/AppBarMixin'
   import { Fragment } from 'vue-fragment'
-  import ExerciseSummary from './exercise/ExerciseSummary'
+  import ExerciseSummary from './ExerciseSummary'
   import { mapGetters } from 'vuex'
-  import ExerciseSolver from './exercise/ExerciseSolver'
-  import { API_EXERCISE, API_EXERCISE_STEPS, API_USER_ANSWERS } from '../constants/paths'
-  import { resolve } from '../utils/Utils'
+  import ExerciseSolver from './ExerciseSolver'
+  import { API_EXERCISE, API_EXERCISE_STEPS, API_USER_ANSWERS } from '../../constants/paths'
+  import { resolve } from '../../utils/Utils'
 
   export default {
     name: 'Exercise',
@@ -78,6 +88,9 @@
       }
     },
     computed: {
+      canEdit () {
+        return this.$can('view', 'ExerciseEdit')
+      },
       words () {
         if (!this.steps) {
           return []
@@ -132,7 +145,16 @@
           }
         }).finally(() => self.stopLoading())
     },
-    methods: {},
+    methods: {
+      edit () {
+        this.$router.push({
+          name: 'ExerciseEdit',
+          params: {
+            id: this.exercise.id
+          }
+        })
+      }
+    },
     components: {
       ExerciseSolver,
       ExerciseSummary,

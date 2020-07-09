@@ -87,12 +87,18 @@
     },
     watch: {
       item: function () {
+        this.updateUser()
+      }
+    },
+    created () {
+      this.updateUser()
+    },
+    methods: {
+      updateUser () {
         this.user = this.item
           ? lodash.cloneDeep(this.item)
           : undefined
-      }
-    },
-    methods: {
+      },
       save () {
         this.$v.$touch()
         if (!this.$v.$invalid) {

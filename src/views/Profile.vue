@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <v-col cols="12" sm="8" md="6">
     <v-text-field
       :value="email"
       label="Email"
@@ -19,11 +19,10 @@
     <v-btn
       :disabled="$v.$invalid"
       color="success"
-      @click="save"
-    >
+      @click="save">
       Save
     </v-btn>
-  </form>
+  </v-col>
 </template>
 
 <script>

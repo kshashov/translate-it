@@ -1,10 +1,5 @@
 <template>
   <fragment>
-    <steps-dialog
-      :item="editedSteps"
-      :on-save="onSaveSteps"
-      :on-close="closeStepsDialog"
-    />
     <exercise-dialog
       :item="editedItem"
       :on-save="onSaveExercise"
@@ -24,7 +19,6 @@
   import ExerciseDialog from './ExerciseDialog'
   import ExercisesTable from './ExercisesTable'
   import { Alert, resolve } from '../../../utils/Utils'
-  import StepsDialog from './StepsDialog'
   import { Fragment } from 'vue-fragment'
   import { API_EXERCISE, API_EXERCISE_STEPS, API_EXERCISES } from '../../../constants/paths'
 
@@ -114,7 +108,6 @@
     components: {
       ExercisesTable,
       ExerciseDialog,
-      StepsDialog,
       Fragment
     }
   }

@@ -20,15 +20,14 @@ export const definePermissions = (user) => {
     can('view', 'Home')
     can('view', 'Login')
     can('view', 'OAuth2RedirectHandler')
-    can('view', 'Forbidden')
     can('view', 'NotFound')
+    can('view', 'Exercise')
 
     // First time the user is 'null' and then it always an object.
     if (user) {
       cannot('view', 'Login')
       can('view', 'Logout')
       can('view', 'Profile')
-      can('view', 'Exercise')
 
       if (has(permissions.manageUsers)) {
         can('view', 'UsersAdmin')
@@ -36,6 +35,7 @@ export const definePermissions = (user) => {
 
       if (has(permissions.manageExercises)) {
         can('view', 'ExercisesAdmin')
+        can('view', 'ExerciseEdit')
       }
     }
   }).rules

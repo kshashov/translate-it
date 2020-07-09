@@ -5,6 +5,7 @@ import UsersAdmin from '../views/admin/users/UsersAdmin'
 import ExercisesAdmin from '../views/admin/exercises/ExercisesAdmin'
 import OAuth2RedirectHandler from '../views/OAuth2RedirectHandler'
 import NotFound from '../views/NotFound'
+import ExerciseEdit from '../views/exercise/edit/ExerciseEdit'
 
 export default [
   {
@@ -31,6 +32,15 @@ export default [
     props: true,
     meta: {
       title: 'Exercise'
+    }
+  },
+  {
+    path: '/exercises/:id/edit',
+    name: 'ExerciseEdit',
+    component: ExerciseEdit,
+    props: true,
+    meta: {
+      title: 'Edit Exercise'
     }
   },
   {

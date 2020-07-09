@@ -67,12 +67,12 @@
           {
             text: 'Home',
             to: { name: 'Home' },
-            disabled: false,
             exact: true
           },
           {
             text: 'Exercise',
-            disabled: true
+            to: { name: 'Exercise' },
+            exact: true
           }
         ]
       }

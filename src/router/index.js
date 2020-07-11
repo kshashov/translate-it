@@ -24,6 +24,9 @@ router.beforeEach(async (to, from, next) => {
     // Validate user permissions to have required route permissions
     store.commit('setHasAccess', ability.can('view', to.name))
 
+    // Hide search from appbar by default
+    store.commit('appBar/hideSearch')
+
     next()
   }
 })

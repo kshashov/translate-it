@@ -1,21 +1,11 @@
 <template>
-  <v-card>
-    <v-card-text>
-      <v-text-field
-        v-model.trim.lazy="search"
-        append-icon="mdi-magnify"
-        label="Search by Name or Email"
-        single-line
-        hide-details
-        clearable
-      ></v-text-field>
-    </v-card-text>
+  <fragment>
     <v-data-table
       :headers="headers"
       :items="users"
       :options.sync="options"
       :server-items-length="totalUsers"
-      :loading="loading"
+      :loading="dataLoading"
       mobile-breakpoint="0">
       <template v-slot:item.name="{ item }">
         <user-name :user="item"/>
@@ -38,16 +28,18 @@
         </v-icon>
       </template>
     </v-data-table>
-  </v-card>
+  </fragment>
 </template>
 
 <script>
   import UserName from '../../../components/UserName'
-  import _ from 'lodash'
   import { API_USERS } from '../../../constants/paths'
+  import AppBarMixin from '../../../mixins/AppBarMixin'
+  import { Fragment } from 'vue-fragment'
 
   export default {
     name: 'UsersTable',
+    mixins: [AppBarMixin],
     props: {
       onEdit: {
         type: Function,
@@ -56,8 +48,7 @@
     },
     data: function () {
       return {
-        search: '',
-        loading: true,
+        dataLoading: true,
         totalUsers: 0,
         users: [],
         options: {},
@@ -89,13 +80,16 @@
         },
         deep: true
       },
-      search: _.debounce(function () {
+      search: function () {
         this.getDataFromApi()
-      }, 1000)
+      }
+    },
+    created () {
+      this.showSearch('Search by Name or Email')
     },
     methods: {
       getDataFromApi () {
-        this.loading = true
+        this.dataLoading = true
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
         const direction = sortDesc[0] ? 'desc' : 'asc'
         const sort = sortBy[0] || ''
@@ -111,17 +105,18 @@
             direction: direction
           }
         }).then(data => {
-          this.loading = false
+          this.dataLoading = false
           this.users = data.items
           this.totalUsers = data.totalItems
         }).catch(response => {
-          this.loading = false
+          this.dataLoading = false
           this.users = []
         })
       }
     },
     components: {
-      UserName
+      UserName,
+      Fragment
     }
   }
 </script>

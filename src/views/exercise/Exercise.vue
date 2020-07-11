@@ -6,16 +6,6 @@
       large
     />
     <div v-if="!loading" class="mx-4">
-      <div class="text-end">
-        <v-btn
-          v-if="canEdit"
-          @click="edit"
-          color="primary"
-          outlined small>
-          <v-icon small left>mdi-pencil</v-icon>
-          Edit
-        </v-btn>
-      </div>
       <ExerciseSummary
         :exercise="exercise"
         :steps="steps"/>
@@ -88,9 +78,6 @@
       }
     },
     computed: {
-      canEdit () {
-        return this.$can('view', 'ExerciseEdit')
-      },
       words () {
         if (!this.steps) {
           return []

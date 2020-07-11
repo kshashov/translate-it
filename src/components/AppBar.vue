@@ -4,25 +4,36 @@
     color="primary"
     dark
   >
-    <v-app-bar-nav-icon v-if="canHome">
+    <v-app-bar-nav-icon v-if="canHome" class="mr-2">
       <v-btn :to="{name: 'Home'}" class="mx-2" icon text exact>
         <v-icon>mdi-home</v-icon>
       </v-btn>
     </v-app-bar-nav-icon>
+
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
 
-    <v-btn v-if="canLogin" @click="login" text rounded>
-      <span class="mr-2">Sign In</span>
-    </v-btn>
+    <v-slide-y-reverse-transition>
+      <template v-if="searchEnabled">
+        <v-text-field
+          v-model="searchText"
+          :placeholder="searchPlaceHolder"
+          prepend-inner-icon="mdi-magnify"
+          style="max-width: 450px"
+          class="mr-2"
+          clearable
+          filled
+          rounded
+          dense
+          hide-details/>
+      </template>
+    </v-slide-y-reverse-transition>
 
-    <v-btn v-if="canUsersAdmin" :to="{name:'UsersAdmin'}" class="mr-2" small text rounded>
-      Users
-    </v-btn>
+    <v-spacer></v-spacer>
 
-    <v-btn v-if="canExercisesAdmin" :to="{name:'ExercisesAdmin'}" class="mr-2" small text rounded>
-      Exercises
-    </v-btn>
+    <v-slide-y-reverse-transition>
+      <router-view name="appBarAppend"/>
+    </v-slide-y-reverse-transition>
 
     <v-progress-linear
       indeterminate
@@ -30,6 +41,28 @@
       :active="loading"
       absolute
       bottom/>
+
+    <v-menu v-if="canAdmin" offset-y>
+      <template v-slot:activator="{on}">
+        <v-btn
+          v-on="on"
+          text small rounded>
+          Admin
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item v-if="canUsersAdmin" :to="{name:'UsersAdmin'}">
+          <v-list-item-title>Users</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-if="canExercisesAdmin" :to="{name:'ExercisesAdmin'}">
+          <v-list-item-title>Exercises</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+
+    <v-btn v-if="canLogin" @click="login" text rounded>
+      <span class="mr-2">Sign In</span>
+    </v-btn>
 
     <v-menu v-if="canLogout" offset-y>
       <template v-slot:activator="{on}">
@@ -56,14 +89,20 @@
 <script>
   import AppBarMixin from '../mixins/AppBarMixin'
   import { mapMutations } from 'vuex'
+  import lodash from 'lodash'
 
   export default {
     name: 'AppBar',
     mixins: [AppBarMixin],
     data: function () {
-      return {}
+      return {
+        searchText: ''
+      }
     },
     computed: {
+      canAdmin () {
+        return this.$can('view', 'Admin')
+      },
       canUsersAdmin () {
         return this.$can('view', 'UsersAdmin')
       },
@@ -82,6 +121,14 @@
       canLogout () {
         return this.$can('view', 'Logout')
       }
+    },
+    watch: {
+      search: function () {
+        this.searchText = this.search
+      },
+      searchText: lodash.debounce(function () {
+        this.setSearchText(this.searchText)
+      }, 1000)
     },
     methods: {
       login () {

@@ -30,10 +30,12 @@ export const definePermissions = (user) => {
       can('view', 'Profile')
 
       if (has(permissions.manageUsers)) {
+        can('view', 'Admin')
         can('view', 'UsersAdmin')
       }
 
       if (has(permissions.manageExercises)) {
+        can('view', 'Admin')
         can('view', 'ExercisesAdmin')
         can('view', 'ExerciseEdit')
       }

@@ -8,7 +8,6 @@
     <exercises-table
       ref="table"
       :on-delete="showDeleteDialog"
-      :on-create="showCreateDialog"
     />
   </fragment>
 </template>
@@ -28,6 +27,11 @@
         editedItem: undefined
       }
     },
+    created () {
+      this.$eventBus.$on('createExercise', () => {
+        this.showCreateDialog()
+      })
+    },
     methods: {
       onCreateExercise (exercise) {
         this.$http({
@@ -37,7 +41,7 @@
         }).then((result) => {
           Alert.success('Exercise has been created')
           this.$refs.table.getDataFromApi()
-          this.closeUpdateDialog()
+          this.closeCreateDialog()
         })
       },
       showCreateDialog () {

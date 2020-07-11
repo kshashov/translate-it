@@ -1,73 +1,50 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        @click="onCreate"
-        color="success"
-        outlined
-        small
-      >
-        <v-icon left>mdi-plus-circle</v-icon>
-        Create
-      </v-btn>
-    </v-card-title>
-    <v-card-text>
-      <v-row>
-        <v-col cols="12" lg="6">
-          <v-text-field
-            v-model.trim="search"
-            append-icon="mdi-magnify"
-            label="Search by Title or Creator"
-            single-line
-            hide-details
-            clearable
-          ></v-text-field>
-        </v-col>
-        <v-col cols="4" lg="2">
-          <v-combobox
-            v-model="filter.tag"
-            :items="tags"
-            label="Category"
-            :loading="!tags"
-            item-text="title"
-            hide-details
-            return-object
-            clearable
-          ></v-combobox>
-        </v-col>
-        <v-col cols="4" lg="2">
-          <v-combobox
-            v-model="filter.from"
-            :items="langs"
-            label="From"
-            :loading="!langs"
-            item-text="title"
-            hide-details
-            return-object
-            clearable
-          ></v-combobox>
-        </v-col>
-        <v-col cols="4" lg="2">
-          <v-combobox
-            v-model="filter.to"
-            :items="langs"
-            label="To"
-            :loading="!langs"
-            item-text="title"
-            hide-details
-            return-object
-            clearable
-          ></v-combobox>
-        </v-col>
-      </v-row>
-    </v-card-text>
+  <fragment>
+    <v-row>
+      <v-col cols="4" md="2">
+        <v-combobox
+          v-model="filter.tag"
+          :items="tags"
+          label="Category"
+          :loading="!tags"
+          item-text="title"
+          hide-details
+          return-object
+          clearable
+        ></v-combobox>
+      </v-col>
+      <v-col cols="4" md="2">
+        <v-combobox
+          v-model="filter.from"
+          :items="langs"
+          label="From"
+          :loading="!langs"
+          item-text="title"
+          hide-details
+          return-object
+          clearable
+        ></v-combobox>
+      </v-col>
+      <v-col cols="4" md="2">
+        <v-combobox
+          v-model="filter.to"
+          :items="langs"
+          label="To"
+          :loading="!langs"
+          item-text="title"
+          hide-details
+          return-object
+          clearable
+        ></v-combobox>
+      </v-col>
+    </v-row>
+
     <v-data-table
       :headers="headers"
       :items="exercises"
       :options.sync="options"
       :server-items-length="totalExercises"
-      :loading="loading"
+      :loading="dataLoading"
       mobile-breakpoint="0"
     >
       <template v-slot:item.title="{ item }">
@@ -98,6 +75,22 @@
       <template v-slot:item.actions="{ item }">
         <v-tooltip top>
           <template #activator="{on}">
+            <router-link
+              class="text-decoration-none"
+              :to="{name: 'ExerciseEdit', params: { id: item.id }}"
+              target="_blank">
+              <v-icon
+                class="mr-2"
+                v-on="on"
+                small
+              > mdi-pencil
+              </v-icon>
+            </router-link>
+          </template>
+          Delete
+        </v-tooltip>
+        <v-tooltip top>
+          <template #activator="{on}">
             <v-icon
               @click="onDelete(item)"
               v-on="on"
@@ -107,10 +100,9 @@
           </template>
           Delete
         </v-tooltip>
-
       </template>
     </v-data-table>
-  </v-card>
+  </fragment>
 </template>
 
 <script>
@@ -119,17 +111,15 @@
   import LangsMixin from '../../../mixins/LangsMixin'
   import TagsMixin from '../../../mixins/TagsMixin'
   import { API_EXERCISES } from '../../../constants/paths'
+  import AppBarMixin from '../../../mixins/AppBarMixin'
+  import { Fragment } from 'vue-fragment'
 
   export default {
     name: 'ExercisesTable',
     mixins: [
-      LangsMixin, TagsMixin
+      LangsMixin, TagsMixin, AppBarMixin
     ],
     props: {
-      onCreate: {
-        type: Function,
-        required: true
-      },
       onDelete: {
         type: Function,
         required: true
@@ -137,7 +127,6 @@
     },
     data: function () {
       return {
-        search: '',
         filter: {
           from: undefined,
           to: undefined,
@@ -145,7 +134,7 @@
         },
         totalExercises: 0,
         exercises: [],
-        loading: true,
+        dataLoading: true,
         options: {},
         headers: [
           {
@@ -181,25 +170,25 @@
         },
         deep: true
       },
-      search: lodash.debounce(function () {
-        this.getDataFromApi()
-      }, 1000),
       filter: {
+        handler () {
+          this.getDataFromApi()
+        },
+        deep: true
+      },
+      search: {
         handler () {
           this.getDataFromApi()
         },
         deep: true
       }
     },
+    created () {
+      this.showSearch('Search by Title or Creator')
+    },
     methods: {
-      openExercise (exercise) {
-        this.$router.push({
-          name: 'Exercise',
-          params: { id: exercise.id }
-        })
-      },
       getDataFromApi () {
-        this.loading = true
+        this.dataLoading = true
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
 
         return this.$http({
@@ -216,17 +205,18 @@
             tag: lodash.get(this.filter, 'tag.id')
           }
         }).then(data => {
-          this.loading = false
+          this.dataLoading = false
           this.exercises = data.items
           this.totalExercises = data.totalPages
         }).catch(response => {
-          this.loading = false
+          this.dataLoading = false
           this.exercises = []
         })
       }
     },
     components: {
-      UserName
+      UserName,
+      Fragment
     }
   }
 </script>

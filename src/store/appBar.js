@@ -3,12 +3,16 @@ export const appBar = {
   namespaced: true,
   state: () => ({
     title: 'Translates',
-    loading: false
+    loading: false,
+    search: '',
+    searchEnabled: false,
+    searchPlaceHolder: ''
   }),
   mutations: {
     setTitle (state, title) {
-      state.title = title || 'Translates'
+      state.title = title || ''
     },
+
     setLoading (state, loading) {
       state.loading = loading
     },
@@ -17,6 +21,20 @@ export const appBar = {
     },
     stopLoading (state) {
       state.loading = false
+    },
+
+    showSearch (state, placeHolder) {
+      state.search = ''
+      state.searchEnabled = true
+      state.searchPlaceHolder = placeHolder
+    },
+    hideSearch (state, placeHolder) {
+      state.search = ''
+      state.searchEnabled = false
+      state.searchPlaceHolder = ''
+    },
+    setSearchText (state, search) {
+      state.search = search
     }
   },
   actions: {

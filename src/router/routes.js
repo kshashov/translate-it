@@ -6,6 +6,9 @@ import ExercisesAdmin from '../views/admin/exercises/ExercisesAdmin'
 import OAuth2RedirectHandler from '../views/OAuth2RedirectHandler'
 import NotFound from '../views/NotFound'
 import ExerciseEdit from '../views/exercise/edit/ExerciseEdit'
+import ExercisesAdminAppBar from '../views/admin/exercises/ExercisesAdminAppBar'
+import ExerciseEditAppBar from '../views/exercise/edit/ExerciseEditAppBar'
+import ExerciseAppBar from '../views/exercise/ExerciseAppBar'
 
 export default [
   {
@@ -13,8 +16,7 @@ export default [
     name: 'Home',
     component: Home,
     meta: {
-      allowAnonymous: true,
-      title: 'Translates'
+      allowAnonymous: true
     }
   },
   {
@@ -28,8 +30,14 @@ export default [
   {
     path: '/exercises/:id',
     name: 'Exercise',
-    component: Exercise,
-    props: true,
+    props: {
+      default: true,
+      appBarAppend: true
+    },
+    components: {
+      default: Exercise,
+      appBarAppend: ExerciseAppBar
+    },
     meta: {
       title: 'Exercise'
     }
@@ -37,8 +45,14 @@ export default [
   {
     path: '/exercises/:id/edit',
     name: 'ExerciseEdit',
-    component: ExerciseEdit,
-    props: true,
+    props: {
+      default: true,
+      appBarAppend: true
+    },
+    components: {
+      default: ExerciseEdit,
+      appBarAppend: ExerciseEditAppBar
+    },
     meta: {
       title: 'Edit Exercise'
     }
@@ -54,7 +68,10 @@ export default [
   {
     path: '/admin/exercises',
     name: 'ExercisesAdmin',
-    component: ExercisesAdmin,
+    components: {
+      default: ExercisesAdmin,
+      appBarAppend: ExercisesAdminAppBar
+    },
     meta: {
       title: 'Exercises'
     }

@@ -12,10 +12,12 @@ Vue.config.productionTip = false
 
 // Load user on page load
 store.dispatch('init').finally(() => {
-  new Vue({
+  const vue = new Vue({
     router,
     store,
     vuetify,
     render: h => h(App)
-  }).$mount('#app')
+  })
+  Vue.prototype.$eventBus = vue
+  vue.$mount('#app')
 })

@@ -95,7 +95,7 @@
   import lodash from 'lodash'
   import ExerciseCard from './ExerciseCard'
   import { Fragment } from 'vue-fragment'
-  import { API_EXERCISES_USER } from '../../constants/paths'
+  import { API_EXERCISES_PUBLIC } from '../../constants/paths'
   import AppBarMixin from '../../mixins/AppBarMixin'
 
   export default {
@@ -131,7 +131,7 @@
     methods: {
       getDataFromApi () {
         return this.$http({
-          url: API_EXERCISES_USER,
+          url: API_EXERCISES_PUBLIC,
           method: 'GET',
           params: {
             page: this.options.page - 1,

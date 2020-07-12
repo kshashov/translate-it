@@ -1,6 +1,6 @@
 <template>
   <v-btn
-    v-if="canEdit"
+    v-if="canView"
     @click="viewExercise"
     class="mr-2"
     color="accent"
@@ -14,8 +14,8 @@
     name: 'ExerciseEditAppBar',
     props: ['id'],
     computed: {
-      canEdit () {
-        return this.$can('view', 'ExerciseEdit')
+      canView () {
+        return this.$can('view', 'Exercise')
       }
     },
     methods: {

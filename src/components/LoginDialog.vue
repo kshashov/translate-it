@@ -15,8 +15,11 @@
       </v-card-text>
 
       <v-card-text class="py-4 px-12">
-        <v-btn :href="googleUrl" color="red" block outlined>
+        <v-btn :href="googleUrl" color="red" class="mb-2" block outlined>
           Google
+        </v-btn>
+        <v-btn :href="githubUrl" color="black" block outlined>
+          GitHub
         </v-btn>
       </v-card-text>
 
@@ -29,7 +32,7 @@
 
 <script>
   import { mapMutations, mapState } from 'vuex'
-  import { GOOGLE_AUTH_URL, OAUTH2_REDIRECT_URI } from '../constants/paths'
+  import { GITHUB_AUTH_URL, GOOGLE_AUTH_URL, OAUTH2_REDIRECT_URI } from '../constants/paths'
 
   export default {
     name: 'LoginDialog',
@@ -39,6 +42,9 @@
       },
       googleUrl () {
         return GOOGLE_AUTH_URL + this.redirectParam
+      },
+      githubUrl () {
+        return GITHUB_AUTH_URL + this.redirectParam
       },
       ...mapState(['showLogin', 'loginError'])
     },

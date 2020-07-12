@@ -1,5 +1,6 @@
 <template>
   <v-btn
+    v-if="canEdit"
     @click="viewExercise"
     class="mr-2"
     color="accent"
@@ -13,6 +14,11 @@
   export default {
     name: 'ExerciseAppBar',
     props: ['id'],
+    computed: {
+      canEdit () {
+        return this.$can('view', 'ExerciseEdit')
+      }
+    },
     methods: {
       viewExercise () {
         this.$router.push({

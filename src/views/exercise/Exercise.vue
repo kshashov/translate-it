@@ -9,7 +9,7 @@
       <ExerciseSummary
         :exercise="exercise"
         :steps="steps"/>
-      <v-row v-if="!authenticated">
+      <v-row v-if="!canSolveExercise">
         <v-col cols="12" class="text-center pa-4">
           <div class="text-uppercase text-subtitle-1 py-4">Words</div>
           <div
@@ -21,12 +21,19 @@
             {{word.translation}}
           </div>
         </v-col>
-        <v-col cols="12" class="text-center">
+        <v-col
+          cols="12"
+          class="text-center">
           <v-btn
+            v-if="!authenticated"
+            @click="setShowLogin(true)"
             color="primary"
             large
           >Login
           </v-btn>
+          <p v-else class="subtitle-1">
+            You have no access to solve exercises
+          </p>
         </v-col>
       </v-row>
       <ExerciseSolver
@@ -44,7 +51,7 @@
   import AppBarMixin from '../../mixins/AppBarMixin'
   import { Fragment } from 'vue-fragment'
   import ExerciseSummary from './ExerciseSummary'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   import ExerciseSolver from './ExerciseSolver'
   import { API_EXERCISE, API_EXERCISE_STEPS, API_USER_ANSWERS } from '../../constants/paths'
   import { resolve } from '../../utils/Utils'
@@ -86,6 +93,9 @@
         return this.steps
           .flatMap(s => s.words)
       },
+      canSolveExercise () {
+        return this.$can('solve', 'Exercise')
+      },
       ...mapGetters(['authenticated'])
     },
     created () {
@@ -123,24 +133,19 @@
 
       Promise.all([exercisesLoading, stepsLoading, answersLoading])
         .then(() => {
-          // Add empty answer arrays for missing steps
-          for (let i = 0; i < self.steps.length; i++) {
-            const stepId = self.steps[i].id
-            if (!self.answers[stepId]) {
-              self.$set(self.answers, stepId + '', [])
+          if (self.answers) {
+            // Add empty answer arrays for missing steps
+            for (let i = 0; i < self.steps.length; i++) {
+              const stepId = self.steps[i].id
+              if (!self.answers[stepId]) {
+                self.$set(self.answers, stepId + '', [])
+              }
             }
           }
         }).finally(() => self.stopLoading())
     },
     methods: {
-      edit () {
-        this.$router.push({
-          name: 'ExerciseEdit',
-          params: {
-            id: this.exercise.id
-          }
-        })
-      }
+      ...mapMutations(['setShowLogin'])
     },
     components: {
       ExerciseSolver,

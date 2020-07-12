@@ -39,6 +39,7 @@ export default [
       appBarAppend: ExerciseAppBar
     },
     meta: {
+      allowAnonymous: true,
       title: 'Exercise'
     }
   },

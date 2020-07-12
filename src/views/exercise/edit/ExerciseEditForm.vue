@@ -58,7 +58,6 @@
     },
     watch: {
       item: function () {
-        console.log(this.item)
         this.updateExercise()
       }
     },
@@ -70,7 +69,6 @@
         this.exercise = this.item
       },
       save () {
-        console.log(this.$refs.exerciseForm.$v.$invalid)
         this.$refs.exerciseForm.save()
       }
     },

@@ -55,13 +55,13 @@
           const source = this.sources[i]
           let wordsCoveredByEmpty = 0
           result[i] = []
-          for (const w in target) {
+          for (let w = 0; w < target.length; w++) {
             const word = target[w]
             let success = false
             for (let sourceW = sourceStart; sourceW < source.length; sourceW++) {
               if (word === source[sourceW]) {
                 // add space before match
-                if ((sourceW > sourceStart) && (sourceW > w + wordsCoveredByEmpty)) {
+                if ((sourceW > sourceStart) && (sourceW > (w + wordsCoveredByEmpty))) {
                   wordsCoveredByEmpty += sourceW - sourceStart - 1
                   result[i].push({
                     fail: true,
@@ -100,7 +100,6 @@
           }
         }
 
-        console.log(result)
         return result[0]
       }
     },

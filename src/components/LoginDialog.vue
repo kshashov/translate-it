@@ -15,11 +15,8 @@
       </v-card-text>
 
       <v-card-text class="py-4 px-12">
-        <v-btn :href="googleUrl" color="red" class="mb-2" block outlined>
+        <v-btn :href="googleUrl" color="red" block outlined>
           Google
-        </v-btn>
-        <v-btn :href="githubUrl" color="black" block outlined>
-          GitHub
         </v-btn>
       </v-card-text>
 

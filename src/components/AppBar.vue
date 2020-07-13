@@ -89,7 +89,7 @@
 <script>
   import AppBarMixin from '../mixins/AppBarMixin'
   import { mapMutations } from 'vuex'
-  import lodash from 'lodash'
+  import debounce from 'lodash/debounce'
 
   export default {
     name: 'AppBar',
@@ -123,10 +123,10 @@
       }
     },
     watch: {
-      search: function () {
-        this.searchText = this.search
+      search: function (search) {
+        this.searchText = search
       },
-      searchText: lodash.debounce(function () {
+      searchText: debounce(function () {
         this.setSearchText(this.searchText)
       }, 1000)
     },

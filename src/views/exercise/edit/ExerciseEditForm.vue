@@ -1,8 +1,8 @@
 <template>
   <fragment>
-<!--    <v-alert v-if="dirty" type="info">-->
-<!--      You have unsaved changes.-->
-<!--    </v-alert>-->
+    <!--    <v-alert v-if="dirty" type="info">-->
+    <!--      You have unsaved changes.-->
+    <!--    </v-alert>-->
     <v-row>
       <v-col
         cols="12"
@@ -13,7 +13,7 @@
               :invalid.sync="invalid"
               :dirty.sync="dirty"
               ref="exerciseForm"
-              :item="exercise"
+              :item="item"
               :on-save="onSave"/>
             <v-btn
               :disabled="invalid"
@@ -47,27 +47,15 @@
     data: function () {
       return {
         dirty: false,
-        invalid: true,
-        exercise: undefined
+        invalid: true
       }
     },
     computed: {
       visible () {
-        return !!this.exercise
+        return !!this.item
       }
-    },
-    watch: {
-      item: function () {
-        this.updateExercise()
-      }
-    },
-    created () {
-      this.updateExercise()
     },
     methods: {
-      updateExercise () {
-        this.exercise = this.item
-      },
       save () {
         this.$refs.exerciseForm.save()
       }

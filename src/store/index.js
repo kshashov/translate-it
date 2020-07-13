@@ -8,7 +8,7 @@ import { langs } from './langs'
 import { tags } from './tags'
 import { roles } from './roles'
 import { exercisesStats } from './exercisesStats'
-import lodash from 'lodash'
+import get from 'lodash/get'
 import { definePermissions } from '../plugins/casl'
 import { appBar } from './appBar'
 
@@ -23,8 +23,8 @@ export default new Vuex.Store({
     hasAccess: false
   },
   getters: {
-    permissions: state => lodash.get(state.user, 'permissions'),
-    userInfo: state => lodash.get(state.user, 'info'),
+    permissions: state => get(state.user, 'permissions'),
+    userInfo: state => get(state.user, 'info'),
     authenticated: state => !!state.user
   },
   mutations: {

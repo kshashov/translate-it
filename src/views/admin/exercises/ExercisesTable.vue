@@ -107,7 +107,7 @@
 
 <script>
   import UserName from '../../../components/UserName'
-  import lodash from 'lodash'
+  import get from 'lodash/get'
   import LangsMixin from '../../../mixins/LangsMixin'
   import TagsMixin from '../../../mixins/TagsMixin'
   import { API_EXERCISES } from '../../../constants/paths'
@@ -200,9 +200,9 @@
             sort: sortBy[0],
             direction: sortDesc[0] ? 'desc' : 'asc',
             filter: this.search,
-            from: lodash.get(this.filter, 'from.id'),
-            to: lodash.get(this.filter, 'to.id'),
-            tag: lodash.get(this.filter, 'tag.id')
+            from: get(this.filter, 'from.id'),
+            to: get(this.filter, 'to.id'),
+            tag: get(this.filter, 'tag.id')
           }
         }).then(data => {
           this.dataLoading = false

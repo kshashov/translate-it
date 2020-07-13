@@ -1,15 +1,7 @@
 <template>
   <v-flex>
     <confirm ref="confirm"></confirm>
-    <v-row v-if="loading" justify="center" class="mx-10">
-      <snackbar/>
-      <v-col cols="12">
-        <v-progress-circular
-          indeterminate
-          color="primary"/>
-      </v-col>
-    </v-row>
-    <v-app v-else :style="{background: $vuetify.theme.themes[isDark].background}">
+    <v-app :style="{background: $vuetify.theme.themes[isDark].background}">
       <snackbar/>
       <app-bar/>
       <LoginDialog/>
@@ -38,9 +30,6 @@
 
   export default {
     name: 'App',
-    data: () => ({
-      loading: true
-    }),
     computed: {
       isDark () {
         return (this.$vuetify.theme.dark) ? 'dark' : 'light'
@@ -48,12 +37,12 @@
       ...mapState('appBar', ['title'])
     },
     watch: {
-      title (to) {
-        document.title = to
+      title: {
+        handler (title) {
+          document.title = title || 'Translate-It'
+        },
+        immediate: true
       }
-    },
-    beforeMount () {
-      this.loading = false
     },
     mounted () {
       this.$root.$confirm = this.$refs.confirm.open

@@ -117,7 +117,7 @@
   import { validationMixin } from 'vuelidate'
   import { required } from 'vuelidate/lib/validators'
   import { Fragment } from 'vue-fragment'
-  import lodash from 'lodash'
+  import cloneDeep from 'lodash/cloneDeep'
   import FormValidationMixin from '../../../../mixins/FormValidationMixin'
 
   export default {
@@ -167,19 +167,16 @@
       }
     },
     watch: {
-      item: function () {
-        this.updateSteps()
+      item: {
+        handler (item) {
+          this.steps = item
+            ? cloneDeep(item)
+            : undefined
+        },
+        immediate: true
       }
     },
-    created () {
-      this.updateSteps()
-    },
     methods: {
-      updateSteps () {
-        this.steps = this.item
-          ? lodash.cloneDeep(this.item)
-          : undefined
-      },
       add (index) {
         this.steps.splice(index, 0, {
           text: '',

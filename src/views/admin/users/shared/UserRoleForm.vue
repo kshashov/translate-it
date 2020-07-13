@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import lodash from 'lodash'
+  import cloneDeep from 'lodash/cloneDeep'
   import { validationMixin } from 'vuelidate'
   import { required } from 'vuelidate/lib/validators'
   import RolesMixin from '../../../../mixins/RolesMixin'
@@ -65,19 +65,16 @@
       }
     },
     watch: {
-      item: function () {
-        this.updateUser()
+      item: {
+        handler (item) {
+          this.user = item
+            ? cloneDeep(item)
+            : undefined
+        },
+        immediate: true
       }
     },
-    created () {
-      this.updateUser()
-    },
     methods: {
-      updateUser () {
-        this.user = this.item
-          ? lodash.cloneDeep(this.item)
-          : undefined
-      },
       save () {
         this.$v.$touch()
         if (!this.$v.$invalid) {

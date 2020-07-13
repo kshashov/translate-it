@@ -102,20 +102,18 @@
       this.startLoading()
     },
     mounted () {
-      const self = this
-
       const exercisesLoading = this.$http
         .get(resolve(API_EXERCISE, { exerciseId: this.id }))
         .then(exercise => {
-          self.links[1].text = exercise.title
-          self.setTitle(exercise.title)
-          self.exercise = exercise
+          this.links[1].text = exercise.title
+          this.setTitle(exercise.title)
+          this.exercise = exercise
         })
 
       const stepsLoading = this.$http
         .get(resolve(API_EXERCISE_STEPS, { exerciseId: this.id }))
         .then((steps) => {
-          self.steps = steps
+          this.steps = steps
         })
 
       let answersLoading = Promise.resolve()
@@ -127,22 +125,22 @@
               userId: this.$store.state.user.info.id
             }
           }).then((answers) => {
-            self.answers = answers
+            this.answers = answers
           })
       }
 
       Promise.all([exercisesLoading, stepsLoading, answersLoading])
         .then(() => {
-          if (self.answers) {
+          if (this.answers) {
             // Add empty answer arrays for missing steps
-            for (let i = 0; i < self.steps.length; i++) {
-              const stepId = self.steps[i].id
-              if (!self.answers[stepId]) {
-                self.$set(self.answers, stepId + '', [])
+            for (let i = 0; i < this.steps.length; i++) {
+              const stepId = this.steps[i].id
+              if (!this.answers[stepId]) {
+                this.$set(this.answers, stepId + '', [])
               }
             }
           }
-        }).finally(() => self.stopLoading())
+        }).finally(() => this.stopLoading())
     },
     methods: {
       ...mapMutations(['setShowLogin'])

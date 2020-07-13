@@ -1,5 +1,5 @@
 import store from '../store'
-import { forEach } from 'lodash'
+import forEach from 'lodash/forEach'
 
 export const resolve = (path, args) => {
   let build = path
@@ -8,6 +8,7 @@ export const resolve = (path, args) => {
   })
   return build
 }
+
 export const Alert = {
   error (text) {
     store.dispatch('snack/setError', { text: text })

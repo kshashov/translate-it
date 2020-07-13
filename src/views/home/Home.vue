@@ -92,7 +92,7 @@
   import LangsMixin from '../../mixins/LangsMixin'
   import TagsMixin from '../../mixins/TagsMixin'
   import ExercisesStatsMixin from '../../mixins/ExercisesStatsMixin'
-  import lodash from 'lodash'
+  import get from 'lodash/get'
   import ExerciseCard from './ExerciseCard'
   import { Fragment } from 'vue-fragment'
   import { API_EXERCISES_PUBLIC } from '../../constants/paths'
@@ -121,24 +121,22 @@
         handler () {
           this.getDataFromApi()
         },
-        deep: true
+        deep: true,
+        immediate: true
       }
-    },
-    mounted () {
-      this.startLoading()
-      this.getDataFromApi()
     },
     methods: {
       getDataFromApi () {
+        this.startLoading()
         return this.$http({
           url: API_EXERCISES_PUBLIC,
           method: 'GET',
           params: {
             page: this.options.page - 1,
             size: this.options.itemsPerPage,
-            from: lodash.get(this.options, 'from.id'),
-            to: lodash.get(this.options, 'to.id'),
-            tag: lodash.get(this.options, 'tag.id')
+            from: get(this.options, 'from.id'),
+            to: get(this.options, 'to.id'),
+            tag: get(this.options, 'tag.id')
           }
         }).then(data => {
           this.exercises = data.items

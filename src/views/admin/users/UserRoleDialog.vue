@@ -44,27 +44,15 @@
     },
     data: function () {
       return {
-        invalid: false,
-        user: undefined
+        invalid: false
       }
     },
     computed: {
       visible () {
-        return !!this.user
+        return !!this.item
       }
-    },
-    watch: {
-      item: function () {
-        this.updateUser()
-      }
-    },
-    created () {
-      this.updateUser()
     },
     methods: {
-      updateUser () {
-        this.user = this.item
-      },
       save () {
         this.$refs.userRoleForm.save()
       },

@@ -53,7 +53,8 @@
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
   import { Fragment } from 'vue-fragment'
-  import lodash from 'lodash'
+  import cloneDeep from 'lodash/cloneDeep'
+  import get from 'lodash/get'
   import LangsMixin from '../../../../mixins/LangsMixin'
   import TagsMixin from '../../../../mixins/TagsMixin'
   import FormValidationMixin from '../../../../mixins/FormValidationMixin'
@@ -117,28 +118,25 @@
       }
     },
     watch: {
-      item: function () {
-        this.updateExercise()
+      item: {
+        handler (item) {
+          this.exercise = item
+            ? cloneDeep(item)
+            : undefined
+        },
+        immediate: true
       }
     },
-    created () {
-      this.updateExercise()
-    },
     methods: {
-      updateExercise () {
-        this.exercise = this.item
-          ? lodash.cloneDeep(this.item)
-          : undefined
-      },
       save () {
         this.$v.$touch()
         if (!this.$v.$invalid) {
           const exercise = {
             ...this.exercise,
-            creator: lodash.get(this.exercise, 'creator.id'),
-            from: lodash.get(this.exercise, 'from.id'),
-            to: lodash.get(this.exercise, 'to.id'),
-            tags: lodash.get(this.exercise, 'tags', []).map((tag) => tag.id)
+            creator: get(this.exercise, 'creator.id'),
+            from: get(this.exercise, 'from.id'),
+            to: get(this.exercise, 'to.id'),
+            tags: get(this.exercise, 'tags', []).map((tag) => tag.id)
           }
 
           this.onSave(exercise)

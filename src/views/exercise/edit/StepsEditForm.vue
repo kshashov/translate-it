@@ -6,7 +6,7 @@
 
     <steps-form
       ref="stepsForm"
-      :item="steps"
+      :item="item"
       :on-save="onSave"
       :invalid.sync="invalid"
       :dirty.sync="dirty"
@@ -42,22 +42,10 @@
     data: function () {
       return {
         invalid: false,
-        dirty: false,
-        steps: undefined
+        dirty: false
       }
-    },
-    watch: {
-      item: function () {
-        this.updateData()
-      }
-    },
-    created () {
-      this.updateData()
     },
     methods: {
-      updateData () {
-        this.steps = this.item
-      },
       save () {
         this.$refs.stepsForm.save()
       }

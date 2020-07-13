@@ -62,24 +62,22 @@
       this.startLoading()
     },
     mounted () {
-      const self = this
-
       const exercisesLoading = this.$http
         .get(resolve(API_EXERCISE, { exerciseId: this.id }))
         .then(exercise => {
-          self.links[1].text = exercise.title
-          self.setTitle(exercise.title)
-          self.exercise = exercise
+          this.links[1].text = exercise.title
+          this.setTitle(exercise.title)
+          this.exercise = exercise
         })
 
       const stepsLoading = this.$http
         .get(resolve(API_EXERCISE_STEPS, { exerciseId: this.id }))
         .then((steps) => {
-          self.steps = steps
+          this.steps = steps
         })
 
       Promise.all([exercisesLoading, stepsLoading])
-        .finally(() => self.stopLoading())
+        .finally(() => this.stopLoading())
     },
     methods: {
       onSaveExercise (exercise) {

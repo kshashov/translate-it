@@ -9,7 +9,7 @@
         <exercise-form
           ref="exerciseForm"
           :invalid.sync="invalid"
-          :item="exercise"
+          :item="item"
           :on-save="this.onSave"/>
       </v-card-text>
 
@@ -54,27 +54,15 @@
     },
     data: function () {
       return {
-        invalid: true,
-        exercise: undefined
+        invalid: true
       }
     },
     computed: {
       visible () {
-        return !!this.exercise
+        return !!this.item
       }
-    },
-    watch: {
-      item: function () {
-        this.updateExercise()
-      }
-    },
-    created () {
-      this.updateExercise()
     },
     methods: {
-      updateExercise () {
-        this.exercise = this.item
-      },
       save () {
         this.$refs.exerciseForm.save()
       },

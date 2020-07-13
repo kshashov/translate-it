@@ -51,7 +51,8 @@
 </template>
 
 <script>
-  import lodash from 'lodash'
+  import last from 'lodash/last'
+  import get from 'lodash/get'
   import AnswersList from './AnswersList'
   import WordsList from './WordsList'
   import UserAnswersList from './UserAnswersList'
@@ -93,7 +94,7 @@
     },
     watch: {
       position () {
-        // Wher step is selected
+        // When step is selected
         this.forceEditMode = false
         this.answer = ''
       }
@@ -104,7 +105,7 @@
           return 0
         }
         return Object.entries(this.answers)
-          .filter(a => lodash.get(lodash.last(a[1]), 'success', false))
+          .filter(a => get(last(a[1]), 'success', false))
           .length
       },
       answersWords () {
@@ -136,7 +137,7 @@
         this.forceEditMode = false
       },
       getLastAnswer (stepId) {
-        return lodash.last(this.answers[stepId])
+        return last(this.answers[stepId])
       },
       hasAnswers (stepId) {
         return this.answers[stepId].length !== 0
@@ -164,9 +165,7 @@
     transition: opacity .2s ease;
   }
 
-  .component-fade-enter, .component-fade-leave-to
-    /* .component-fade-leave-active до версии 2.1.8 */
-  {
+  .component-fade-enter, .component-fade-leave-to {
     opacity: 0;
   }
 </style>

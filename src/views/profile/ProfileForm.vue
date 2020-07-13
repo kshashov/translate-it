@@ -23,7 +23,7 @@
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
   import { Fragment } from 'vue-fragment'
-  import lodash from 'lodash'
+  import cloneDeep from 'lodash/cloneDeep'
   import FormValidationMixin from '../../mixins/FormValidationMixin'
 
   export default {
@@ -59,19 +59,16 @@
       }
     },
     watch: {
-      item: function () {
-        this.updateUser()
+      item: {
+        handler (item) {
+          this.user = item
+            ? cloneDeep(item)
+            : undefined
+        },
+        immediate: true
       }
     },
-    created () {
-      this.updateUser()
-    },
     methods: {
-      updateUser () {
-        this.user = this.item
-          ? lodash.cloneDeep(this.item)
-          : undefined
-      },
       save () {
         this.$v.$touch()
         if (!this.$v.$invalid) {

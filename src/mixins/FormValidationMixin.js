@@ -1,14 +1,16 @@
 export default {
   watch: {
-    '$v.$invalid': function () {
-      this.$emit('update:invalid', this.$v.$invalid)
+    '$v.$invalid': {
+      handler (value) {
+        this.$emit('update:invalid', value)
+      },
+      immediate: true
     },
-    '$v.$anyDirty': function () {
-      this.$emit('update:dirty', this.$v.$anyDirty)
+    '$v.$anyDirty': {
+      handler (value) {
+        this.$emit('update:dirty', value)
+      },
+      immediate: true
     }
-  },
-  created () {
-    this.$emit('update:invalid', this.$v.$invalid)
-    this.$emit('update:dirty', this.$v.$anyDirty)
   }
 }

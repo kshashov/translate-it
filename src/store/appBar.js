@@ -28,7 +28,7 @@ export const appBar = {
       state.searchEnabled = true
       state.searchPlaceHolder = placeHolder
     },
-    hideSearch (state, placeHolder) {
+    hideSearch (state) {
       state.search = ''
       state.searchEnabled = false
       state.searchPlaceHolder = ''

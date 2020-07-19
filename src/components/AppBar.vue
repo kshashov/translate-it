@@ -127,7 +127,7 @@
         this.searchText = search
       },
       searchText: debounce(function () {
-        this.setSearchText(this.searchText)
+        this.setSearchText(this.searchText || '')
       }, 1000)
     },
     methods: {

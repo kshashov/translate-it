@@ -17,7 +17,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: undefined,
-    loading: false,
     showLogin: false,
     loginError: undefined,
     hasAccess: false

@@ -15,8 +15,14 @@
       </v-card-text>
 
       <v-card-text class="py-4 px-12">
-        <v-btn :href="googleUrl" color="red" block outlined>
-          Google
+        <v-btn
+          :key="client.title"
+          v-for="client in clients"
+          :href="getClientUrl(client)"
+          color="primary"
+          class="mb-1"
+          block outlined>
+          {{client.title}}
         </v-btn>
       </v-card-text>
 
@@ -29,23 +35,32 @@
 
 <script>
   import { mapMutations, mapState } from 'vuex'
-  import { GITHUB_AUTH_URL, GOOGLE_AUTH_URL, OAUTH2_REDIRECT_URI } from '../constants/paths'
+  import { API_BASE_URL, API_OAUTH_CLIENTS, OAUTH2_REDIRECT_URI } from '../constants/paths'
 
   export default {
     name: 'LoginDialog',
+    data: function () {
+      return {
+        clients: []
+      }
+    },
+    created () {
+      this.$http
+        .get(API_OAUTH_CLIENTS)
+        .then(clients => {
+          this.clients = clients
+        })
+    },
     computed: {
       redirectParam () {
         return encodeURIComponent(OAUTH2_REDIRECT_URI + '?from=' + encodeURIComponent(this.$route.fullPath))
       },
-      googleUrl () {
-        return GOOGLE_AUTH_URL + this.redirectParam
-      },
-      githubUrl () {
-        return GITHUB_AUTH_URL + this.redirectParam
-      },
       ...mapState(['showLogin', 'loginError'])
     },
     methods: {
+      getClientUrl (client) {
+        return API_BASE_URL + client.url + '?redirect_uri=' + this.redirectParam
+      },
       ...mapMutations(['setShowLogin'])
     }
   }

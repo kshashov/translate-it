@@ -1,6 +1,11 @@
 <template>
   <fragment>
     <v-text-field
+      :value="user.client"
+      label="Auth Provider"
+      disabled
+    ></v-text-field>
+    <v-text-field
       :value="user.email"
       label="Email"
       disabled

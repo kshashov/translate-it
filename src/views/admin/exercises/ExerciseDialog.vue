@@ -8,8 +8,8 @@
       <v-card-text>
         <exercise-form
           ref="exerciseForm"
-          :invalid.sync="invalid"
           :item="item"
+          :invalid.sync="invalid"
           :on-save="this.onSave"/>
       </v-card-text>
 

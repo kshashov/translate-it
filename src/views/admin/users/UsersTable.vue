@@ -54,6 +54,10 @@
         options: {},
         headers: [
           {
+            text: 'Client',
+            value: 'client'
+          },
+          {
             text: 'Name',
             value: 'name'
           },

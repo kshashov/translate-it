@@ -1,58 +1,55 @@
 <template>
-  <fragment>
-    <v-row>
-      <v-col cols="12" class="py-0">
-        <v-text-field
-          v-model.trim="$v.exercise.title.$model"
-          :error-messages="titleErrors"
-          label="Title"
-        ></v-text-field>
-        <v-select
-          v-model="$v.exercise.tags.$model"
-          :items="tags"
-          :error-messages="tagsErrors"
-          label="Tags"
-          :loading="!tags"
-          item-text="title"
-          return-object
-          clearable
-          small-chips
-          deletable-chips
-          multiple>
-        </v-select>
-      </v-col>
-      <v-col cols="12" sm="6" md="6" class="py-0">
-        <v-select
-          v-model="$v.exercise.from.$model"
-          :items="langs"
-          :error-messages="fromErrors"
-          label="From"
-          :loading="!langs"
-          item-text="title"
-          return-object
-          clearable>
-        </v-select>
-      </v-col>
-      <v-col cols="12" sm="6" md="6" class="py-0">
-        <v-select
-          v-model="$v.exercise.to.$model"
-          :items="langs"
-          :error-messages="toErrors"
-          label="To"
-          :loading="!langs"
-          item-text="title"
-          return-object
-          clearable>
-        </v-select>
-      </v-col>
-    </v-row>
-  </fragment>
+  <v-row>
+    <v-col cols="12" class="py-0">
+      <v-text-field
+        v-model.trim="$v.exercise.title.$model"
+        :error-messages="titleErrors"
+        label="Title"
+      ></v-text-field>
+      <v-select
+        v-model="$v.exercise.tags.$model"
+        :items="tags"
+        :error-messages="tagsErrors"
+        label="Tags"
+        :loading="!tags"
+        item-text="title"
+        return-object
+        clearable
+        small-chips
+        deletable-chips
+        multiple>
+      </v-select>
+    </v-col>
+    <v-col cols="12" sm="6" md="6" class="py-0">
+      <v-select
+        v-model="$v.exercise.from.$model"
+        :items="langs"
+        :error-messages="fromErrors"
+        label="From"
+        :loading="!langs"
+        item-text="title"
+        return-object
+        clearable>
+      </v-select>
+    </v-col>
+    <v-col cols="12" sm="6" md="6" class="py-0">
+      <v-select
+        v-model="$v.exercise.to.$model"
+        :items="langs"
+        :error-messages="toErrors"
+        label="To"
+        :loading="!langs"
+        item-text="title"
+        return-object
+        clearable>
+      </v-select>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
-  import { Fragment } from 'vue-fragment'
   import cloneDeep from 'lodash/cloneDeep'
   import get from 'lodash/get'
   import LangsMixin from '../../../../mixins/LangsMixin'
@@ -142,7 +139,6 @@
           this.onSave(exercise)
         }
       }
-    },
-    components: { Fragment }
+    }
   }
 </script>

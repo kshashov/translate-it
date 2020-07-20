@@ -1,9 +1,5 @@
 export const API_BASE_URL = process.env.VUE_APP_TRANSLATES_API_BASE_URL
 
-export const BASE_URL = process.env.VUE_APP_TRANSLATES_BASE_URL
-
-export const OAUTH2_REDIRECT_URI = BASE_URL + '/oauth2/redirect'
-
 export const API_LANGS = 'api/langs'
 export const API_TAGS = 'api/tags'
 export const API_ROLES = 'api/roles'

@@ -61,6 +61,7 @@ export default new Vuex.Store({
       localStorage.setItem(ACCESS_TOKEN, payload.token)
       return getCurrentUser()
         .then(response => {
+          console.log('login')
           commit('login', response)
           // Redirect to from page
           router.push(payload.from || '/')

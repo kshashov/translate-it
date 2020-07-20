@@ -7,8 +7,9 @@ import store from '../store'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+  base: process.env.VUE_APP_TRANSLATES_PUBLIC_PATH,
   routes,
-  mode: 'history'
+  mode: process.env.VUE_APP_TRANSLATES_PUBLIC_PATH === '/' ? 'history' : 'hash'
 })
 
 router.beforeEach(async (to, from, next) => {

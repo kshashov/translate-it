@@ -35,7 +35,7 @@
 
 <script>
   import { mapMutations, mapState } from 'vuex'
-  import { API_BASE_URL, API_OAUTH_CLIENTS, OAUTH2_REDIRECT_URI } from '../constants/paths'
+  import { API_BASE_URL, API_OAUTH_CLIENTS } from '../constants/paths'
 
   export default {
     name: 'LoginDialog',
@@ -45,6 +45,7 @@
       }
     },
     created () {
+      console.log()
       this.$http
         .get(API_OAUTH_CLIENTS)
         .then(clients => {
@@ -53,7 +54,9 @@
     },
     computed: {
       redirectParam () {
-        return encodeURIComponent(OAUTH2_REDIRECT_URI + '?from=' + encodeURIComponent(this.$route.fullPath))
+        const host = window.location.origin
+        const callback = host + this.$router.resolve({ name: 'OAuth2RedirectHandler' }).href
+        return encodeURIComponent(callback + '?from=' + encodeURIComponent(this.$route.fullPath))
       },
       ...mapState(['showLogin', 'loginError'])
     },

@@ -19,7 +19,6 @@ jobs:
         env:
           VUE_APP_TRANSLATES_PUBLIC_PATH: /translate-it/
           VUE_APP_TRANSLATES_API_BASE_URL: https://translate-it-api.herokuapp.com
-          VUE_APP_TRANSLATES_BASE_URL: https://kshashov.github.io/translate-it
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3

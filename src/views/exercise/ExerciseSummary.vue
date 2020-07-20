@@ -49,7 +49,7 @@
           .join(' ')
       },
       languages () {
-        return this.exercise.from.code + ' ⮕ ' + this.exercise.to.code
+        return this.exercise.from.code + ' → ' + this.exercise.to.code
       }
     }
   }

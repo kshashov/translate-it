@@ -26,7 +26,7 @@
               v-model.trim="step.text.$model"
               :error-messages="textErrors(step)"
               label="Text"
-              rows="2"
+              rows="1"
               auto-grow/>
             <v-row>
               <v-col cols="12" class="pa-1">
@@ -49,7 +49,7 @@
                           v-model.trim="answer.text.$model"
                           :error-messages="answerTextErrors(answer)"
                           :label="'Answer #'+(parseInt(answerIndex) + 1)"
-                          rows="2"
+                          rows="1"
                           auto-grow/>
                       </v-list-item-title>
                       <v-list-item-action>

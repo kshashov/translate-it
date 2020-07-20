@@ -1,4 +1,4 @@
-[![Heroku](http://heroku-badge.herokuapp.com/?app=translate-it&svg=1)](https://translate-it.herokuapp.com)
+![GitHub Pages Deploy](https://github.com/kshashov/translate-it/workflows/GitHub%20Pages%20Deploy/badge.svg)
 
 # Translate-It
 
@@ -52,5 +52,5 @@ TRANSLATES_BASE_URL=http://localhost:3000
 ```
 
 ### CI/CD
-* **Heroku** - deploying to [https://translate-it.herokuapp.com](https://translate-it.herokuapp.com)
+* **GitHub Pages** - deploying to [https://kshashov.github.io/translate-it](https://kshashov.github.io/translate-it)
 

@@ -1,8 +1,14 @@
 <template>
   <fragment>
-<!--    <v-alert v-if="dirty" type="info">-->
-<!--      You have unsaved changes.-->
-<!--    </v-alert>-->
+    <!--    <v-alert v-if="dirty" type="info">-->
+    <!--      You have unsaved changes.-->
+    <!--    </v-alert>-->
+    <v-btn
+      :disabled="invalid"
+      @click="save"
+      color="success">
+      Save Steps
+    </v-btn>
 
     <steps-form
       ref="stepsForm"

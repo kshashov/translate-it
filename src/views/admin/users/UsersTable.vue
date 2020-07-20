@@ -21,11 +21,17 @@
         </v-tooltip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon
-          @click="onEdit(item)"
-          small>
-          mdi-pencil
-        </v-icon>
+        <v-tooltip top>
+          <template #activator="{on}">
+            <v-icon
+              @click="onEdit(item)"
+              v-on="on"
+              small>
+              mdi-pencil
+            </v-icon>
+          </template>
+          Edit
+        </v-tooltip>
       </template>
     </v-data-table>
   </fragment>

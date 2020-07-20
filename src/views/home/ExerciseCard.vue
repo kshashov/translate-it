@@ -4,7 +4,7 @@
       <v-row class="ma-0">
         <v-col class="pa-0">
           <span class="text-overline">
-            {{exercise.from.code}} ⮕ {{exercise.to.code}}
+            {{exercise.from.code}} → {{exercise.to.code}}
           </span>
         </v-col>
         <v-spacer/>

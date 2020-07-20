@@ -87,7 +87,7 @@
               </v-icon>
             </router-link>
           </template>
-          Delete
+          Edit
         </v-tooltip>
         <v-tooltip top>
           <template #activator="{on}">

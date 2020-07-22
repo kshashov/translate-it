@@ -11,13 +11,11 @@ import 'vue-popperjs/dist/vue-popper.css'
 Vue.config.productionTip = false
 
 // Load user on page load
-store.dispatch('init').finally(() => {
-  const vue = new Vue({
-    router,
-    store,
-    vuetify,
-    render: h => h(App)
-  })
-  Vue.prototype.$eventBus = vue
-  vue.$mount('#app')
+const vue = new Vue({
+  router,
+  store,
+  vuetify,
+  render: h => h(App)
 })
+Vue.prototype.$eventBus = vue
+vue.$mount('#app')

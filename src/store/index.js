@@ -9,7 +9,7 @@ import { tags } from './tags'
 import { roles } from './roles'
 import { exercisesStats } from './exercisesStats'
 import get from 'lodash/get'
-import { definePermissions } from '../plugins/casl'
+import ability, { definePermissions } from '../plugins/casl'
 import { appBar } from './appBar'
 
 Vue.use(Vuex)
@@ -49,19 +49,24 @@ export default new Vuex.Store({
   },
   actions: {
     async init ({ commit }) {
-      try {
-        if (localStorage.getItem(ACCESS_TOKEN)) {
-          const response = await getCurrentUser()
-          commit('login', response)
-        }
-      } catch (e) {
+      if (localStorage.getItem(ACCESS_TOKEN)) {
+        const response = await getCurrentUser()
+        commit('login', response)
       }
+    },
+    authorize ({ commit, getters }, route) {
+      // Show login dialog if necessary
+      if (!route.meta.allowAnonymous) {
+        commit('setShowLogin', !getters.authenticated)
+      }
+
+      // Validate user permissions to have required route permissions
+      commit('setHasAccess', ability.can('view', route.name))
     },
     login ({ commit }, payload) {
       localStorage.setItem(ACCESS_TOKEN, payload.token)
       return getCurrentUser()
         .then(response => {
-          console.log('login')
           commit('login', response)
           // Redirect to from page
           router.push(payload.from || '/')

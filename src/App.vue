@@ -27,6 +27,7 @@
   import Confirm from './components/Confirm'
   import { mapState } from 'vuex'
   import LoginDialog from './components/LoginDialog'
+  import store from './store'
 
   export default {
     name: 'App',
@@ -43,6 +44,12 @@
         },
         immediate: true
       }
+    },
+    created () {
+      store.dispatch('init')
+        .finally(() => {
+          store.dispatch('authorize', this.$route)
+        })
     },
     mounted () {
       this.$root.$confirm = this.$refs.confirm.open

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ability from '../plugins/casl'
 import routes from './routes'
 import store from '../store'
 
@@ -17,13 +16,7 @@ router.beforeEach(async (to, from, next) => {
     // If login is not needed then redirect to home
     next({ name: 'Home' })
   } else {
-    // Show login dialog if necessary
-    if (!to.meta.allowAnonymous) {
-      store.commit('setShowLogin', !store.getters.authenticated)
-    }
-
-    // Validate user permissions to have required route permissions
-    store.commit('setHasAccess', ability.can('view', to.name))
+    store.dispatch('authorize', to)
 
     // Hide search from appbar by default
     store.commit('appBar/hideSearch')

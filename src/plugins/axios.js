@@ -1,9 +1,10 @@
 import { ACCESS_TOKEN } from '../constants'
-import { API_BASE_URL } from '../constants/paths'
+import { API_BASE_URL, API_ME } from '../constants/paths'
 import { Alert } from '../utils/Utils'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'
 import axios from 'axios'
+import store from '../store'
 
 const fetchClient = axios.create({
   baseURL: API_BASE_URL,
@@ -21,6 +22,13 @@ fetchClient.interceptors.request.use(function (config) {
 })
 
 fetchClient.interceptors.response.use(response => response.data, error => {
+  if (firstUserProfileRequest(error)) {
+    // Remove expired token
+    localStorage.removeItem(ACCESS_TOKEN)
+    // Suppress error messages
+    return Promise.reject(error)
+  }
+
   if (!error.response) {
     Alert.error('Unexpected error. Try again later')
   } else {
@@ -37,6 +45,10 @@ fetchClient.interceptors.response.use(response => response.data, error => {
     return Promise.reject(error)
   }
 })
+
+function firstUserProfileRequest (error) {
+  return !store.getters.authenticated && (error.response.config.url === API_ME)
+}
 
 Vue.use(VueAxios, fetchClient)
 

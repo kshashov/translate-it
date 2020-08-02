@@ -22,7 +22,6 @@
       }
     },
     created: function () {
-      console.log('callback')
       if (this.token) {
         this.$store.dispatch('login', {
           token: this.token,

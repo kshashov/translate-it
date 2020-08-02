@@ -45,7 +45,6 @@
       }
     },
     created () {
-      console.log()
       this.$http
         .get(API_OAUTH_CLIENTS)
         .then(clients => {

@@ -85,4 +85,4 @@ VUE_APP_TRANSLATES_API_BASE_URL=http://localhost:8084
 VUE_APP_TRANSLATES_PUBLIC_PATH=/
 ```
 
-In case the `VUE_APP_TRANSLATES_PUBLIC_PATH` path is `/`, the `history` router mode is used, othervise the `hash`. 
+In case the `VUE_APP_TRANSLATES_PUBLIC_PATH` path is `/`, the `history` router mode is used, otherwise the `hash`. 

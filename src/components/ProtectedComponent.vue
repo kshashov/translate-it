@@ -8,7 +8,7 @@
 
 <script>
   import Forbidden from '../views/Forbidden'
-  import { mapState } from 'vuex'
+  import { mapGetters, mapState } from 'vuex'
   import SignIn from '../views/SignIn'
 
   export default {
@@ -17,7 +17,8 @@
       return {}
     },
     computed: {
-      ...mapState(['hasAccess', 'authenticated'])
+      ...mapState(['hasAccess']),
+      ...mapGetters(['authenticated'])
     },
     components: {
       SignIn,
